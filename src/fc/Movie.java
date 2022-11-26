@@ -55,9 +55,7 @@ public class Movie {
         this.title = title;
     }
 
-    public void setActors(ArrayList<String> actors) {
-        this.actors = actors;
-    }
+    public void setActors(ArrayList<String> actors) {this.actors = actors;}
 
     public void setDirector(String director) {
         Director = director;

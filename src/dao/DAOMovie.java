@@ -25,13 +25,12 @@ public class DAOMovie extends DAO<Movie>{
     @Override
     public boolean create(Movie obj) throws SQLException {
         try( PreparedStatement preparedStatement = conn.prepareStatement(
-                "INSERT INTO MOVIES VALUES  id = ? , title = ? , actors = ? , director = ? , isAvailableAsQRCode = ? , isAvailableAsBluRay = ? ")) {
+                "INSERT INTO MOVIES VALUES  id = ? , title = ? , director = ? , isAvailableAsQRCode = ? , isAvailableAsBluRay = ? ")) {
             preparedStatement.setInt(1, obj.getId());
             preparedStatement.setString(2, obj.getTitle());
-            preparedStatement.setString(3, obj.getActors()); //TODO: comment gérer foreignkey?
-            preparedStatement.setString(4, obj.getDirector());
-            preparedStatement.setBoolean(5, obj.getQRCodeAvailability());
-            preparedStatement.setBoolean(6, obj.getBluRayAvailability());
+            preparedStatement.setString(3, obj.getDirector());
+            preparedStatement.setBoolean(4, obj.getQRCodeAvailability());
+            preparedStatement.setBoolean(5, obj.getBluRayAvailability());
 
 
             return preparedStatement.executeUpdate() > 0;
