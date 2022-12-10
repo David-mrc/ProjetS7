@@ -1,14 +1,12 @@
 
 package dao;
 
-import Support;
+import fc.Support;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashSet;
-import java.util.Set;
 
 public class DAOSupport extends DAO<Support> {
     public DAOSupport(Connection conn) {
@@ -17,24 +15,39 @@ public class DAOSupport extends DAO<Support> {
 
     @Override
     public boolean create(Support obj) {
-        return false;
+        try( PreparedStatement preparedStatement = conn.prepareStatement(
+                "INSERT INTO SUPPORTS VALUES  supportId = ? , supportType = ? , available = ? , readableDisk = ? , lostDisk = ?, streamAddress = ?, movieId = ? ")) {
+            preparedStatement.setInt(1, obj.getSupportId());
+            preparedStatement.setString(2, obj.getSupportType());
+            preparedStatement.setInt(3, obj.getAvailable());
+            preparedStatement.setInt(4, obj.getReadableDisk());
+            preparedStatement.setInt(5, obj.getLostDisk());
+            preparedStatement.setString(6, obj.getStreamAddress());
+            preparedStatement.setInt(7, obj.getMovieId());
+
+            return preparedStatement.executeUpdate() > 0;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return false;;
     }
 
     @Override
     public Support read(Object supportID) {
         Support support = null;
 
-        try (PreparedStatement Support = conn.prepareStatement("SELECT TYPE, AVAILABLE, READABLEDISK, STREAMADRESS, MOVIEID FROM SUPPORT WHERE SUPPORTID = ?")){
+        try (PreparedStatement Support = conn.prepareStatement("SELECT SUPPORTTYPE, AVAILABLE, READABLEDISK, LOSTDISK, STREAMADRESS, MOVIEID FROM SUPPORT WHERE SUPPORTID = ?")){
             Support.setInt(1, (Integer)supportID);
             ResultSet resultSet = Support.executeQuery();
 
             support = new Support();
             if (resultSet.next()) {
-                support.setType(resultSet.getString(1));
-                support.setAvailable(resultSet.getBoolean(2));
-                support.setReadableDisk(resultSet.getBoolean(3));
-                support.setStreamAdress(resultSet.getString(4));
-                support.setMovieId(resultSet.getInt(5));
+                support.setSupportType(resultSet.getString(1));
+                support.setAvailable(resultSet.getInt(2));
+                support.setReadableDisk(resultSet.getInt(3));
+                support.setLostDisk(resultSet.getInt(4));
+                support.setStreamAdress(resultSet.getString(5));
+                support.setMovieId(resultSet.getInt(6));
             }
 
         } catch (SQLException e) {
@@ -61,11 +74,10 @@ public class DAOSupport extends DAO<Support> {
         return false;
     }
 
-    //ToDo :
-   /* @Override
-    public boolean delete(Cage obj) {
+   @Override
+    public boolean delete(Support obj) {
         return false;
-    }*/
+    }
 
     //ToDo :
     /*public Set<Cage> readAvailableCagesForGardien(Gardien g) {
