@@ -1,4 +1,7 @@
-package fc;
+package fc.interfaces;
+
+import fc.Movie;
+
 public class CyberVideoInterface {
 
     public void requestMovieAsBluRay(Movie mov ){
