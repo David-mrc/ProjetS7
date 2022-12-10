@@ -5,8 +5,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
+import fc.MovieCategories;
 public class DAOMovieCategories extends DAO<MovieCategories> {
+
     public DAOMovieCategories(Connection conn) {
         super(conn);
     }
@@ -16,14 +17,14 @@ public class DAOMovieCategories extends DAO<MovieCategories> {
         try( PreparedStatement preparedStatement = conn.prepareStatement(
                 "INSERT INTO MOVIECATEGORIES VALUES ( movieId = ? , category = ? )"))
         {
-            preparedStatement.setInt(1, obj.getMovieId());
+            preparedStatement.setInt(1, obj.getMovieID());
             preparedStatement.setString(2, obj.getCategory());
 
             return preparedStatement.executeUpdate() > 0;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        return false;;
+        return false;
     }
 
     @Override
@@ -46,7 +47,9 @@ public class DAOMovieCategories extends DAO<MovieCategories> {
         return movieCategories;
     }
 
-
+    public boolean update(MovieCategories obj) {
+        return false;
+    }
     @Override
     public boolean delete(MovieCategories obj) {
         return false;

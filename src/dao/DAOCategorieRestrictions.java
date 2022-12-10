@@ -35,7 +35,7 @@ public class DAOCategorieRestrictions extends DAO<CategorieRestrictions> {
             ResultSet resultSet = CategorieRestrictions.executeQuery();
 
             categorieRestrictions = new CategorieRestrictions();
-            categorieRestrictions.setCardId( (Integer) cardID);
+            categorieRestrictions.setCardId( (Integer) cardId);
             if (resultSet.next()) {
                 categorieRestrictions.setCategory(resultSet.getString(1));
             }

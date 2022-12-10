@@ -1,6 +1,8 @@
 
 package dao;
 
+import fc.BluRay;
+import fc.QRCode;
 import fc.Support;
 
 import java.sql.Connection;
@@ -16,12 +18,12 @@ public class DAOSupport extends DAO<Support> {
     @Override
     public boolean create(Support obj) {
         try( PreparedStatement preparedStatement = conn.prepareStatement(
-                "INSERT INTO SUPPORTS VALUES  supportId = ? , supportType = ? , available = ? , readableDisk = ? , lostDisk = ?, streamAddress = ?, movieId = ? ")) {
-            preparedStatement.setInt(1, obj.getSupportId());
+                "INSERT INTO SUPPORTS VALUES ( supportId = ? , supportType = ? , available = ? , readableDisk = ? , lostDisk = ?, streamAddress = ?, movieId = ?) ")) {
+            preparedStatement.setInt(1, obj.getSupportID());
             preparedStatement.setString(2, obj.getSupportType());
-            preparedStatement.setInt(3, obj.getAvailable());
-            preparedStatement.setInt(4, obj.getReadableDisk());
-            preparedStatement.setInt(5, obj.getLostDisk());
+            preparedStatement.setInt(3, obj.isAvailable() ? 1 :0);
+            preparedStatement.setInt(4, obj.isReadableDisk() ? 1 :0);
+            preparedStatement.setInt(5, obj.isLostDisk()? 1 :0);
             preparedStatement.setString(6, obj.getStreamAddress());
             preparedStatement.setInt(7, obj.getMovieId());
 
@@ -29,24 +31,25 @@ public class DAOSupport extends DAO<Support> {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        return false;;
+        return false;
     }
 
     @Override
     public Support read(Object supportID) {
         Support support = null;
 
-        try (PreparedStatement Support = conn.prepareStatement("SELECT SUPPORTTYPE, AVAILABLE, READABLEDISK, LOSTDISK, STREAMADRESS, MOVIEID FROM SUPPORT WHERE SUPPORTID = ?")){
+        try (PreparedStatement Support = conn.prepareStatement("SELECT SUPPORTTYPE, AVAILABLE, READABLEDISK, LOSTDISK, STREAMADDRESS, MOVIEID FROM SUPPORTS WHERE SUPPORTID = ?")){
             Support.setInt(1, (Integer)supportID);
             ResultSet resultSet = Support.executeQuery();
 
-            support = new Support();
+            support = resultSet.getString(1) == "BluRay" ? new BluRay() : new QRCode(); // 1 == BLuray
+            support.setSupportID(((Integer) supportID));
             if (resultSet.next()) {
                 support.setSupportType(resultSet.getString(1));
-                support.setAvailable(resultSet.getInt(2));
-                support.setReadableDisk(resultSet.getInt(3));
-                support.setLostDisk(resultSet.getInt(4));
-                support.setStreamAdress(resultSet.getString(5));
+                support.setAvailable(resultSet.getInt(2)==1);
+                support.setReadableDisk(resultSet.getInt(3)==1);
+                support.setLostDisk(resultSet.getInt(4)==1);
+                support.setStreamAddress(resultSet.getString(5));
                 support.setMovieId(resultSet.getInt(6));
             }
 
@@ -59,11 +62,11 @@ public class DAOSupport extends DAO<Support> {
 
     @Override
     public boolean update(Support obj) {
-        try (PreparedStatement preparedStatement = conn.prepareStatement("UPDATE SUPPORT SET TYPE = ?, AVAILABLE = ?, READABLEDISK = ?, STREAMADRESS = ?, MOVIEID = ? WHERE SUPPORTID = ?")) {
-            preparedStatement.setString(1, obj.getType());
-            preparedStatement.setBoolean(2, obj.getAvailable());
-            preparedStatement.setBoolean(3, obj.getReadableDisk());
-            preparedStatement.setString(1, obj.getStreamAdress());
+        try (PreparedStatement preparedStatement = conn.prepareStatement("UPDATE SUPPORTS SET SUPPORTTYPE = ?, AVAILABLE = ?, READABLEDISK = ?, STREAMADDRESS = ?, MOVIEID = ? WHERE SUPPORTID = ?")) {
+            preparedStatement.setString(1, obj.getSupportType());
+            preparedStatement.setInt(2, obj.isAvailable() ? 1 : 0);
+            preparedStatement.setInt(3, obj.isReadableDisk() ? 1 : 0);
+            preparedStatement.setString(1, obj.getStreamAddress());
             preparedStatement.setInt(1, obj.getMovieId());
 
             return preparedStatement.executeUpdate() > 0;

@@ -88,8 +88,15 @@ public class Movie {
 
     public void setPoster(String p){poster = p;}
     public void setAgeRestriction(int a){ageRestriction = a;}
+    public void setId(int a){id = a;}
+
 
     public void setReleaseDate(Date d){releaseDate = d;}
+
+    public String toString() {
+        return "ID : " + id + " TITLE : " + title + " RELEASEDATE : " + releaseDate +
+                "AGERESTRICTION :" + ageRestriction + "POSTER :" + poster;
+    }
 
 
 }
