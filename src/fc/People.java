@@ -1,20 +1,15 @@
 package fc;
-import java.util.ArrayList;
 
-public class Director {
+public class People {
 
+    private int id;
     private String firstName;
     private String lastName;
-    private int MovieID;
 
-    public int getMovieID() {
-        return MovieID;
+    //GETTERS
+    public int getId() {
+        return id;
     }
-
-    public void setMovieID(int movieID) {
-        MovieID = movieID;
-    }
-//GETTERS
 
     public String getFirstName() {
         return firstName;
@@ -25,6 +20,9 @@ public class Director {
     }
 
     //SETTERS
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
