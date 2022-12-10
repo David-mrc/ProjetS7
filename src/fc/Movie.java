@@ -32,7 +32,7 @@ public class Movie {
         return new BluRay();
     }
 
-    public getAvailableQRCode(){
+    public QRCode getAvailableQRCode(){
         return new QRCode();
     }
 
