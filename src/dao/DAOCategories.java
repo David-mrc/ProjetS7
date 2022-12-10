@@ -1,6 +1,8 @@
 
 package dao;
 
+import fc.Categories;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -21,12 +23,17 @@ public class DAOCategories extends DAO<Categories> {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        return false;;
+        return false;
     }
 
     @Override
     public Categories read(Object category) {//inutile
-        return Null;
+        return null;
+    }
+
+    @Override
+    public boolean update(Categories obj) throws SQLException {
+        return false;
     }
 
 

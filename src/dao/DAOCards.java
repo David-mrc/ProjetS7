@@ -5,10 +5,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import fc.Cards;
 import fc.SubscriptionCard;
 
-public class DAOCards extends DAO<Cards> {
+public class DAOCards extends DAO<SubscriptionCard> {
     public DAOCards(Connection conn) {
         super(conn);
     }
@@ -27,11 +26,11 @@ public class DAOCards extends DAO<Cards> {
             throwables.printStackTrace();
         }
         return false;
-        ;
+
     }
 
     @Override
-    public Cards read(Object cardID) {
+    public SubscriptionCard read(Object cardID) {
         SubscriptionCard cards = null;
 
         try (PreparedStatement Cards = conn.prepareStatement("SELECT balance, ageRestriction, userId FROM CARDS WHERE cardId = ?")) {
@@ -53,9 +52,13 @@ public class DAOCards extends DAO<Cards> {
         return cards;
     }
 
+    @Override
+    public boolean update(SubscriptionCard obj) throws SQLException {
+        return false;
+    }
 
     @Override
-    public boolean delete(Cards obj) {
+    public boolean delete(SubscriptionCard obj) {
         return false;
     }
 }

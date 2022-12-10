@@ -23,7 +23,7 @@ public class DAOCategorieRestrictions extends DAO<CategorieRestrictions> {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        return false;;
+        return false;
     }
 
     @Override
@@ -35,6 +35,7 @@ public class DAOCategorieRestrictions extends DAO<CategorieRestrictions> {
             ResultSet resultSet = CategorieRestrictions.executeQuery();
 
             categorieRestrictions = new CategorieRestrictions();
+            categorieRestrictions.setCardId( (Integer) cardID);
             if (resultSet.next()) {
                 categorieRestrictions.setCategory(resultSet.getString(1));
             }
@@ -44,6 +45,11 @@ public class DAOCategorieRestrictions extends DAO<CategorieRestrictions> {
         }
 
         return categorieRestrictions;
+    }
+
+    @Override
+    public boolean update(CategorieRestrictions obj) throws SQLException {
+        return false;
     }
 
 
