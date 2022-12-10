@@ -42,24 +42,31 @@ public class DAOMovie extends DAO<Movie>{
     public Movie read(Object obj) throws SQLException {
         Movie movie = null;
 
-        try (PreparedStatement Movie = conn.prepareStatement("SELECT TITLE,RELEASEDATE,AGERESTRICTION,POSTER  FROM MOVIES WHERE MovieID = ?");
-            PreparedStatement ActorsPlaying = conn.prepareStatement(("SELECT firstName, lastNAme FROM ACTORS WHERE MovieID = ?"))) {
-            Movie.setInt(1, (Integer) obj);
-            ActorsPlaying.setInt(1, (Integer)obj);
+        try {
+            PreparedStatement Movie = conn.prepareStatement("SELECT TITLE,RELEASEDATE,AGERESTRICTION,POSTER  FROM MOVIES_BASE WHERE MovieID = ?");
+            PreparedStatement ActorsPlaying = conn.prepareStatement(("SELECT firstName, lastNAme FROM ACTORS WHERE MovieID = ?"));
+            System.out.println(Movie);
+            Movie.setInt(1, ((Integer)obj).intValue());
+            ActorsPlaying.setInt(1, ((Integer)obj).intValue());
+
             ResultSet MovieResult = Movie.executeQuery();
-            ResultSet ActorsResult = Movie.executeQuery();
+
 
             movie = new Movie();
+            movie.setId((Integer)obj);
             if (MovieResult.next()) {
                 movie.setTitle(MovieResult.getString(1));
                 movie.setReleaseDate(MovieResult.getDate(2));
                 movie.setAgeRestriction(MovieResult.getInt(3));
                 movie.setPoster(MovieResult.getString(4));
             }
+            /*
+            ResultSet ActorsResult = ActorsPlaying.executeQuery();
 
             while (ActorsResult.next()) {
-                movie.addActor(ActorsResult.getString(1) + " " +ActorsResult.getString(2));
+                movie.addActor(ActorsResult.getString(1) + " " + ActorsResult.getString(2));
             }
+             */
 
         } catch (SQLException e) {
             e.printStackTrace();
