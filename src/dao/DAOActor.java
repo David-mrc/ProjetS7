@@ -1,13 +1,10 @@
 package dao;
 import fc.Actor;
-import fc.CyberVideoInterface;
-import fc.Movie;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 public class DAOActor extends DAO<Actor>{
 

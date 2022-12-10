@@ -1,5 +1,5 @@
 package dao;
-import fc.CyberVideoInterface;
+import fc.interfaces.CyberVideoInterface;
 import fc.Movie;
 
 import java.sql.Connection;
