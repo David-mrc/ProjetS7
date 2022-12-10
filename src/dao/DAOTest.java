@@ -1,6 +1,5 @@
 package dao;
 
-import IHM.OS2K;
 import fc.*;
 
 import javax.swing.*;
@@ -8,11 +7,12 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import
 
 public class DAOTest {
     public static void main(String[] args) {
         String url ="jdbc:oracle:thin:@im2ag-oracle.e.ujf-grenoble.fr:1521:im2ag";
-        String user="bultinc";
+        String user="bultincl";
         String passwd="e5f05c6c48";
 
         Connection conn;
