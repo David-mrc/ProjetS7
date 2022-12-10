@@ -2,21 +2,34 @@ package fc;
 import java.util.ArrayList;
 
 public class Movie {
-    int id;
-    String title;
-    ArrayList<String> actors;
-    String Director;
-    CyberVideoInterface cvinterface;
-    boolean isAvailableAsQRCode = false;
-    boolean isAvailableAsBluRay = false;
+    private int id;
+    private String title;
+    private ArrayList<String> actors;
+    private String Director;
+    private CyberVideoInterface cvinterface;
+    private boolean isAvailableAsQRCode = false;
+    private boolean isAvailableAsBluRay = false;
 
-    public boolean isAvailableAsQRCode(){
-        return isAvailableAsQRCode;
+    public void requestAsBluRay(Movie movie){
+        cvinterface.requestMovieAsBluRay(movie);
     }
 
-    public boolean isAvailableAsBluRay(){
+    //GETTERS
+    public boolean getQRCodeAvailability(){return isAvailableAsQRCode;}
+
+    public boolean getBluRayAvailability(){
         return isAvailableAsBluRay;
     }
+
+    public CyberVideoInterface getCyberVideoInterface(){return cvinterface;}
+
+    public String getDirector(){return Director;}
+
+    public ArrayList<String> getActors(){return actors;}
+
+    public String getTitle() {return title;}
+
+    public int getId() {return id;}
 
     public int getWeeklyRentals(){
         return 0;
@@ -36,17 +49,13 @@ public class Movie {
         return new QRCode();
     }
 
-    public void requestAsBluRay(Movie movie){
-        cvinterface.requestMovieAsBluRay(movie);
-    }
+   //SETTERS
 
     public void setTitle(String title) {
         this.title = title;
     }
 
-    public void setActors(ArrayList<String> actors) {
-        this.actors = actors;
-    }
+    public void setActors(ArrayList<String> actors) {this.actors = actors;}
 
     public void setDirector(String director) {
         Director = director;
