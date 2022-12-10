@@ -10,6 +10,11 @@ public class User {
     private Date birthday;
     private boolean subscriber;
 
+    @Override
+    public String toString() {
+        return "userID : " + userID + " ; firstname : " + firstname + " ; lastName : " + lastName + " ; address : " + address + " ; birthday : " + birthday + " ; subscriber : " + subscriber;
+    }
+
     public int getUserID() {
         return userID;
     }

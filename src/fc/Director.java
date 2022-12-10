@@ -7,6 +7,10 @@ public class Director {
     private String lastName;
     private int MovieID;
 
+    @Override
+    public String toString() {
+        return "Movieid : " + MovieID + " ; firstName : " + firstName + " ; lastName : " + lastName;
+    }
     public int getMovieID() {
         return MovieID;
     }

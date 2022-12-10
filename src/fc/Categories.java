@@ -4,7 +4,10 @@ public abstract class Categories {
 
     private String category;
 
-
+    @Override
+    public String toString() {
+        return "category : " + category ;
+    }
     public String getCategory() {
         return category;
     }

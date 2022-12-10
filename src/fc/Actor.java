@@ -10,6 +10,11 @@ public class Actor {
     //GETTERS
 
 
+    @Override
+    public String toString() {
+        return "id : " + id + " ; firstName : " + firstName + " ; lastName : " + lastName;
+    }
+
     public int getId() {
         return id;
     }

@@ -1,9 +1,9 @@
 package IHM;
 
-import java.awt.Component;
-import fc.FCInterface;
+import fc.interfaces.CyberVideoInterface;
+import fc.interfaces.DBInterface;
+import fc.interfaces.FCInterface;
 import javax.swing.*;
-import IHM.VueApp;
 
 
 public class App {
@@ -13,7 +13,7 @@ public class App {
     JFrame f;
 
     public void demarre(JFrame fenetreAppli) {
-        fc = new FCInterface(this);
+        fc = new FCInterface(this, new CyberVideoInterface(), new DBInterface());
         vue = new VueApp(this);
         f = fenetreAppli;
     }
