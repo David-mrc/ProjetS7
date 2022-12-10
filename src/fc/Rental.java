@@ -10,6 +10,11 @@ public class Rental {
     private int userid;
     private int supportid;
 
+    @Override
+    public String toString() {
+        return "id : " + id + " ; startDate : " + startDate + " ; endDate : " + endDate + " ; price : " + price + " ; userid : " + userid + " ; supportid : " + supportid;
+    }
+
     public int getId() {
         return id;
     }

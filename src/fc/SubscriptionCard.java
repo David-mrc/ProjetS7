@@ -5,7 +5,10 @@ public class SubscriptionCard extends Cards{
     private float balance;
     private int getAgeRestriction;
     private int getUserId;
-
+    @Override
+    public String toString() {
+        return "CardId : " + CardId + " ; balance : " + balance + " ; getAgeRestriction : " + getAgeRestriction + " ; getUserId : " + getUserId;
+    }
 
     public int getUserId() {
         return getUserId;

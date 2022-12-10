@@ -3,6 +3,11 @@ package fc;
 public  class CategorieRestrictions {
     private int cardId;
     private String category;
+
+    @Override
+    public String toString() {
+        return "cardId : " + cardId + " ; category : " + category ;
+    }
     public int getCardId() {
         return cardId;
     }

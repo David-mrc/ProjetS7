@@ -6,6 +6,11 @@ public class People {
     private String firstName;
     private String lastName;
 
+
+    @Override
+    public String toString() {
+        return "id : " + id + " ; firstName : " + firstName + " ; lastName : " + lastName;
+    }
     //GETTERS
     public int getId() {
         return id;
