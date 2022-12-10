@@ -1,4 +1,6 @@
 package fc;
+
+import java.sql.Date;
 import java.util.ArrayList;
 
 public class Movie {
@@ -9,6 +11,9 @@ public class Movie {
     private CyberVideoInterface cvinterface;
     private boolean isAvailableAsQRCode = false;
     private boolean isAvailableAsBluRay = false;
+    private Date releaseDate;
+    private int ageRestriction;
+    private String poster;
 
     public void requestAsBluRay(Movie movie){
         cvinterface.requestMovieAsBluRay(movie);
@@ -30,6 +35,10 @@ public class Movie {
     public String getTitle() {return title;}
 
     public int getId() {return id;}
+
+    public Date getDate() {return releaseDate;}
+    public int getAgeRestriction() {return ageRestriction;}
+    public String getPoster(){return poster;}
 
     public int getWeeklyRentals(){
         return 0;
@@ -76,4 +85,11 @@ public class Movie {
     public void addActor(String actor){
         actors.add(actor);
     }
+
+    public void setPoster(String p){poster = p;}
+    public void setAgeRestriction(int a){ageRestriction = a;}
+
+    public void setReleaseDate(Date d){releaseDate = d;}
+
+
 }

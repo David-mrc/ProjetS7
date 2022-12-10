@@ -1,8 +1,5 @@
 package dao;
-import fc.Actor;
-import fc.CyberVideoInterface;
-import fc.Director;
-import fc.Movie;
+import fc.*;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,6 +15,15 @@ public class DAODirector extends DAO<Director>{
 
     @Override
     public boolean create(Director obj) throws SQLException {
+        try( PreparedStatement preparedStatement = conn.prepareStatement(
+                "INSERT INTO DIRECTORS VALUES (FIRSTNAME = ? , LASTNAME = ? , MOVIEID = ?) ")) {
+            preparedStatement.setString(1, obj.getFirstName());
+            preparedStatement.setString(2, obj.getLastName());
+            preparedStatement.setInt(3, obj.getMovieID());
+            return preparedStatement.executeUpdate() > 0;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
         return false;
     }
 
@@ -33,6 +39,15 @@ public class DAODirector extends DAO<Director>{
 
     @Override
     public boolean delete(Director obj) throws SQLException {
+        try (PreparedStatement Director = conn.prepareStatement(
+                "DELETE FROM DIRECTORS WHERE FIRSTNAME = ? AND LASTNAME = ?");)
+        {
+            Director.setString(1, obj.getFirstName());
+            Director.setString(2,obj.getLastName());
+            return Director.executeUpdate() > 0;
+        }catch (SQLException throwables){
+            throwables.printStackTrace();
+        }
         return false;
     }
 }

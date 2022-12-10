@@ -25,14 +25,12 @@ public class DAOMovie extends DAO<Movie>{
     @Override
     public boolean create(Movie obj) throws SQLException {
         try( PreparedStatement preparedStatement = conn.prepareStatement(
-                "INSERT INTO MOVIES VALUES  id = ? , title = ? , director = ? , isAvailableAsQRCode = ? , isAvailableAsBluRay = ? ")) {
+                "INSERT INTO MOVIES_BASE VALUES (id = ? , title = ? , releaseDate = ? , ageRestriction = ?) ")) {
             preparedStatement.setInt(1, obj.getId());
             preparedStatement.setString(2, obj.getTitle());
-            preparedStatement.setString(3, obj.getDirector());
-            preparedStatement.setBoolean(4, obj.getQRCodeAvailability());
-            preparedStatement.setBoolean(5, obj.getBluRayAvailability());
-
-
+            preparedStatement.setDate(3, obj.getDate());
+            preparedStatement.setInt(4, obj.getAgeRestriction());
+            preparedStatement.setString(5, obj.getPoster());
             return preparedStatement.executeUpdate() > 0;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -44,7 +42,7 @@ public class DAOMovie extends DAO<Movie>{
     public Movie read(Object obj) throws SQLException {
         Movie movie = null;
 
-        try (PreparedStatement Movie = conn.prepareStatement("SELECT TITLE, DIRECTOR FROM MOVIES WHERE MovieID = ?");
+        try (PreparedStatement Movie = conn.prepareStatement("SELECT TITLE,RELEASEDATE,AGERESTRICTION,POSTER  FROM MOVIES WHERE MovieID = ?");
             PreparedStatement ActorsPlaying = conn.prepareStatement(("SELECT firstName, lastNAme FROM ACTORS WHERE MovieID = ?"))) {
             Movie.setInt(1, (Integer) obj);
             ActorsPlaying.setInt(1, (Integer)obj);
@@ -54,7 +52,9 @@ public class DAOMovie extends DAO<Movie>{
             movie = new Movie();
             if (MovieResult.next()) {
                 movie.setTitle(MovieResult.getString(1));
-                movie.setDirector(MovieResult.getString(2));
+                movie.setReleaseDate(MovieResult.getDate(2));
+                movie.setAgeRestriction(MovieResult.getInt(3));
+                movie.setPoster(MovieResult.getString(4));
             }
 
             while (ActorsResult.next()) {

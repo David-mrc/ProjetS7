@@ -1,4 +1,4 @@
 package fc;
 
-public class BluRay extends Support {
+public class BluRay extends Support{
 }
