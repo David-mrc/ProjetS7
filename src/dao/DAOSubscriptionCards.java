@@ -14,7 +14,7 @@ public class DAOSubscriptionCards extends DAO<SubscriptionCard> {
     }
 
     @Override
-    public boolean create(SubscriptionCard obj) {
+    public boolean create(SubscriptionCard obj) throws SQLException {
         try (PreparedStatement preparedStatement = conn.prepareStatement(
                 "INSERT INTO SUBSCRIPTIONCARDS VALUES ( CARDID = ? , BALANCE = ? , USERID = ? )")) {
             preparedStatement.setInt(1, obj.getCardId());
@@ -30,7 +30,7 @@ public class DAOSubscriptionCards extends DAO<SubscriptionCard> {
     }
 
     @Override
-    public SubscriptionCard read(Object cardID) {
+    public SubscriptionCard read(Object cardID) throws SQLException {
         SubscriptionCard cards = null;
 
         try (PreparedStatement Cards = conn.prepareStatement("SELECT BALANCE, USERID FROM SUBSCRIPTIONCARDS WHERE CARDID = ?")) {
