@@ -1,3 +1,6 @@
+DROP VIEW Users;
+DROP VIEW Movies;
+DROP VIEW Support;
 DROP TABLE Rentals;
 DROP TABLE CategoriesRestrictions;
 DROP TABLE SubscriptionCards;
