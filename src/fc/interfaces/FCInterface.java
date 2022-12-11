@@ -23,15 +23,18 @@ public class FCInterface {
 
 
     //TODO: implement methods
-    public void getAvailableMovies(){
+    public ArrayList<Movie> getAvailableMovies(){
+        return dbi.getMovieList();
+    }
 
+    public ArrayList<Movie> getMoviesAvailableAsBluRay() {
+        return dbi.getMovieListBR();
     }
-    public ArrayList<String> getMoviesAvailableAsBluRay() {
-        return new ArrayList<String>();
-    }
-    public void getMoviesAvailableAsQRCode(){
 
+    public ArrayList<Movie> getMoviesAvailableAsQRCode(){
+        return dbi.getMovieListQR();
     }
+
     public void  searchUnavailableMovie(String s){
 
     }
@@ -59,7 +62,7 @@ public class FCInterface {
     public void  getBalance() {
 
     }
-    public void  login(String username, String password){
+    public void  login(){
 
     }
     public void  logout(){
