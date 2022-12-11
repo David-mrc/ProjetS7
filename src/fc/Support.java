@@ -67,7 +67,7 @@ public abstract class Support {
     }
 
     public String toString(){
-        return "SUPPORTID : " + supportID + "SUPPORTTYPE : " + supportType + "AVAILABLE : " + available + "READABLEDISK : " +readableDisk +
+        return "SUPPORTID : " + supportID + "SUPPORTTYPE : " + supportType + "AVAILABLE : " + available + "READABLEDISK : " +damagedDisk +
                 "LOSTDISK : " + lostDisk + "STREAMADDRESS : " + streamAddress + "MOVIEID : " + MovieID;
     }
 }
