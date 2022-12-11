@@ -20,13 +20,16 @@ public class DAORentals extends DAO<Rental> {
     @Override
     public boolean create(Rental obj) throws SQLException {
         try( PreparedStatement preparedStatement = conn.prepareStatement(
-                "INSERT INTO RENTALS VALUES (RENTALID = ? , STARTDATE = ? , ENDDATE = ? , PRICE = ?, USERID = ?, SUPPORTID = ?) ")) {
+                "INSERT INTO RENTALS VALUES (RENTALID = ? , STARTDATE = ? , ENDDATE = ? , PRICE = ?, " +
+                        "USERID = ?, SUPPORTID = ?, CARDNUMBER = ?, CARDID = ?) ")) {
             preparedStatement.setInt(1, obj.getId());
             preparedStatement.setDate(2, obj.getStartDate());
             preparedStatement.setDate(3, obj.getEndDate());
             preparedStatement.setFloat(4, obj.getPrice());
             preparedStatement.setInt(5, obj.getUserid());
             preparedStatement.setInt(6,obj.getSupportid());
+            preparedStatement.setInt(7,obj.getCardnumber());
+            preparedStatement.setInt(8,obj.getCardID());
             return preparedStatement.executeUpdate() > 0;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -39,7 +42,7 @@ public class DAORentals extends DAO<Rental> {
         Rental rental = null;
         //Vérifaction obj de type int ?
         try (PreparedStatement Rentals = conn.prepareStatement(
-                "SELECT STARTDATE,ENDDATE,PRICE,USERID,SUPPORTID FROM RENTALS WHERE RENTALID = ?");)
+                "SELECT STARTDATE,ENDDATE,PRICE,USERID,SUPPORTID,CARDNUMBER,CARDID FROM RENTALS WHERE RENTALID = ?");)
         {
             Rentals.setInt(1, (Integer) obj);
             ResultSet RentalResult = Rentals.executeQuery();
@@ -52,6 +55,8 @@ public class DAORentals extends DAO<Rental> {
                 rental.setPrice(RentalResult.getFloat(3));
                 rental.setUserid(RentalResult.getInt(4));
                 rental.setSupportid(RentalResult.getInt(5));
+                rental.setCardnumber(RentalResult.getInt(6));
+                rental.setCardID(RentalResult.getInt(7));
             }
         }catch (SQLException e) {
             e.printStackTrace();

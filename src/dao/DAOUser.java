@@ -17,13 +17,12 @@ public class DAOUser extends DAO<User>{
     @Override
     public boolean create(User obj) throws SQLException {
         try( PreparedStatement preparedStatement = conn.prepareStatement(
-                "INSERT INTO USERS VALUES (USERID = ? , FIRSTNAME = ? , LASTNAME = ? , ADDRESS = ?, BIRTHDATE, SUBSCRIBER) ")) {
+                "INSERT INTO USERS VALUES (USERID = ? , FIRSTNAME = ? , LASTNAME = ? , ADDRESS = ?, SUBSCRIBER) ")) {
             preparedStatement.setInt(1, obj.getUserID());
             preparedStatement.setString(2, obj.getFirstname());
             preparedStatement.setString(3, obj.getLastName());
             preparedStatement.setString(4, obj.getAddress());
-            preparedStatement.setDate(5, obj.getBirthday());
-            preparedStatement.setInt(6,obj.isSubscriber() ? 1 : 0);
+            preparedStatement.setInt(5,obj.isSubscriber() ? 1 : 0);
             return preparedStatement.executeUpdate() > 0;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -36,7 +35,7 @@ public class DAOUser extends DAO<User>{
         User user = null;
         //Vérifaction obj de type int ?
         try (PreparedStatement User = conn.prepareStatement(
-                "SELECT FIRSTNAME,LASTNAME,ADDRESS,BIRTHDATE,SUBSCRIBER  FROM USERS WHERE USERID = ?");)
+                "SELECT FIRSTNAME,LASTNAME,ADDRESS,SUBSCRIBER  FROM USERS WHERE USERID = ?");)
         {
             User.setInt(1, (Integer) obj);
             ResultSet UserResult = User.executeQuery();
@@ -47,8 +46,7 @@ public class DAOUser extends DAO<User>{
                 user.setFirstname(UserResult.getString(1));
                 user.setLastName(UserResult.getString(2));
                 user.setAddress(UserResult.getString(3));
-                user.setBirthday(UserResult.getDate(4));
-                user.setSubscriber(UserResult.getInt(5) == 1);
+                user.setSubscriber(UserResult.getInt(4) == 1);
             }
         }catch (SQLException e) {
             e.printStackTrace();

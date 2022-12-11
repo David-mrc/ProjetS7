@@ -40,9 +40,8 @@ public class DAOTest {
             Movie movie3 = new Movie();
             movie3.setTitle("Winnie L'ourson");
             movie3.setId(3);
-            movie3.setReleaseDate(new Date(1977,8,8));
-            movie3.setAgeRestriction(3);
-            movie3.setPoster("Image de winnie l'ourson");
+            movie3.setDirectorFirstname("Disney");
+            movie3.setDirectorFirstname("Disney");
 
         } catch (SQLException e) {
             e.printStackTrace();

@@ -9,6 +9,8 @@ public class Rental {
     private float price;
     private int userid;
     private int supportid;
+    private int cardnumber;
+    private int cardID;
 
     @Override
     public String toString() {
@@ -61,5 +63,20 @@ public class Rental {
 
     public void setSupportid(int supportid) {
         this.supportid = supportid;
+    }
+    public int getCardnumber() {
+        return cardnumber;
+    }
+
+    public void setCardnumber(int cardnumber) {
+        this.cardnumber = cardnumber;
+    }
+
+    public int getCardID() {
+        return cardID;
+    }
+
+    public void setCardID(int cardID) {
+        this.cardID = cardID;
     }
 }

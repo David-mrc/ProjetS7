@@ -1,46 +1,18 @@
 package fc;
 
-import fc.interfaces.CyberVideoInterface;
-
-import java.sql.Date;
-import java.util.ArrayList;
-
 public class Movie {
     private int id;
     private String title;
-    private ArrayList<String> actors;
-    private String Director;
-    private CyberVideoInterface cvinterface;
-    private boolean isAvailableAsQRCode = false;
-    private boolean isAvailableAsBluRay = false;
-    private Date releaseDate;
-    private int ageRestriction;
-    private String poster;
+    private String  directorFirstname;
+    private String  directorLastname;
 
-    public void requestAsBluRay(Movie movie){
-        cvinterface.requestMovieAsBluRay(movie);
-    }
+    public String getDirectorFirstname(){return directorFirstname;}
+    public String getDirectorLastname(){return directorLastname;}
 
-    //GETTERS
-    public boolean getQRCodeAvailability(){return isAvailableAsQRCode;}
-
-    public boolean getBluRayAvailability(){
-        return isAvailableAsBluRay;
-    }
-
-    public CyberVideoInterface getCyberVideoInterface(){return cvinterface;}
-
-    public String getDirector(){return Director;}
-
-    public ArrayList<String> getActors(){return actors;}
 
     public String getTitle() {return title;}
 
     public int getId() {return id;}
-
-    public Date getDate() {return releaseDate;}
-    public int getAgeRestriction() {return ageRestriction;}
-    public String getPoster(){return poster;}
 
     public int getWeeklyRentals(){
         return 0;
@@ -66,38 +38,16 @@ public class Movie {
         this.title = title;
     }
 
-    public void setActors(ArrayList<String> actors) {this.actors = actors;}
-
-    public void setDirector(String director) {
-        Director = director;
+    public void setDirectorLastname(String directorLn) {
+        directorLastname = directorLn;
     }
-
-    public void setCvinterface(CyberVideoInterface cvinterface) {
-        this.cvinterface = cvinterface;
+    public void setDirectorFirstname(String directorFn) {
+        directorFirstname = directorFn;
     }
-
-    public void setAvailableAsQRCode(boolean availableAsQRCode) {
-        isAvailableAsQRCode = availableAsQRCode;
-    }
-
-    public void setAvailableAsBluRay(boolean availableAsBluRay) {
-        isAvailableAsBluRay = availableAsBluRay;
-    }
-
-    public void addActor(String actor){
-        actors.add(actor);
-    }
-
-    public void setPoster(String p){poster = p;}
-    public void setAgeRestriction(int a){ageRestriction = a;}
     public void setId(int a){id = a;}
 
-
-    public void setReleaseDate(Date d){releaseDate = d;}
-
     public String toString() {
-        return "ID : " + id + " TITLE : " + title + " RELEASEDATE : " + releaseDate +
-                "AGERESTRICTION :" + ageRestriction + "POSTER :" + poster;
+        return "ID : " + id + " TITLE : " + title + "DIRECTORS : "+ ;
     }
 
 
