@@ -15,7 +15,7 @@ public class DAOCategories extends DAO<Categories> {
     @Override
     public boolean create(Categories obj) {
         try( PreparedStatement preparedStatement = conn.prepareStatement(
-                "INSERT INTO MOVIECATEGORIES VALUES (  category = ? )"))
+                "INSERT INTO CATEGORIES VALUES (  CATEGORYNAME = ? )"))
         {
             preparedStatement.setString(1, obj.getCategory());
 
