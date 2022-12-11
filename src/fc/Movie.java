@@ -1,10 +1,27 @@
 package fc;
 
+import dao.DAOFacade;
+import dao.DAOMovie;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
 public class Movie {
     private int id;
     private String title;
     private String  directorFirstname;
     private String  directorLastname;
+    private ArrayList<Actor> actors;
+    public Movie(){}
+    public Movie(int id, DAOFacade dao) throws SQLException {
+        Movie m = dao.readMovie(id);
+        this.id = id;
+        this.title = m.getTitle();
+        this.directorLastname = m.getDirectorLastname();
+        this.directorFirstname = m.getDirectorFirstname();
+        actors = dao.getActorFromMovies(id);
+    }
 
     public String getDirectorFirstname(){return directorFirstname;}
     public String getDirectorLastname(){return directorLastname;}
