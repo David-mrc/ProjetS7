@@ -1,9 +1,7 @@
 package fc;
 
-import dao.DAOFacade;
-import dao.DAOMovie;
+import dao.DAOFacadeMovie;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -13,8 +11,10 @@ public class Movie {
     private String  directorFirstname;
     private String  directorLastname;
     private ArrayList<Actor> actors;
+    private DAOFacadeMovie dao;
     public Movie(){}
-    public Movie(int id, DAOFacade dao) throws SQLException {
+    public Movie(int id, DAOFacadeMovie dao) throws SQLException {
+        this.dao = dao;
         Movie m = dao.readMovie(id);
         this.id = id;
         this.title = m.getTitle();
@@ -32,12 +32,11 @@ public class Movie {
     public int getId() {return id;}
 
     public int getWeeklyRentals(){
-        return 0;
-        // Calcul via request DAO.
+        return dao.getWeeklyRentals(id);
     }
 
     public int getMonthlyRentals(){
-        return 0;
+        return dao.getMonthlyRentals(id);
         // Calcul via request DAO.
     }
 
@@ -64,7 +63,7 @@ public class Movie {
     public void setId(int a){id = a;}
 
     public String toString() {
-        return "ID : " + id + " TITLE : " + title + "DIRECTORS : "+ ;
+        return "ID : " + id + " TITLE : " + title + "DIRECTORS : " + directorFirstname + " " +directorLastname;
     }
 
 

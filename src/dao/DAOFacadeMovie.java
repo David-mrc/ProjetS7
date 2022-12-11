@@ -2,6 +2,7 @@ package dao;
 
 import fc.Actor;
 import fc.Movie;
+import fc.Support;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,13 +10,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class DAOFacade {
+public class DAOFacadeMovie {
 
     protected Connection conn;
 
-    protected DAOFacade(Connection conn) {
+    protected DAOFacadeMovie(Connection conn) {
         this.conn = conn;
     }
+
+    //
     public Movie readMovie (int id){
         DAOMovie daoMovie =  new DAOMovie(conn);
         Movie m = null;
@@ -48,6 +51,44 @@ public class DAOFacade {
         }
 
         return actors;
+    }
+
+    public int getWeeklyRentals(int movieID){
+        int weeklyRentals = 0;
+        try {
+            PreparedStatement WeeklyRentals = conn.prepareStatement("SELECT WEEKRENTALS FROM MOVIES WHERE MovieID = ?");
+            WeeklyRentals.setInt(1, movieID);
+            ResultSet resultSet = WeeklyRentals.executeQuery();
+
+
+            if (resultSet.next()) {
+                weeklyRentals =  resultSet.getInt(1);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return weeklyRentals;
+
+    }
+
+    public int getMonthlyRentals(int movieID){
+        int monthlyRentals = 0;
+        try {
+            PreparedStatement MonthlyRentals = conn.prepareStatement("SELECT MONTHRENTALS FROM MOVIES WHERE MovieID = ?");
+            MonthlyRentals.setInt(1, movieID);
+            ResultSet resultSet = MonthlyRentals.executeQuery();
+
+
+            if (resultSet.next()) {
+                monthlyRentals =  resultSet.getInt(1);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return monthlyRentals;
+
     }
 
 }
