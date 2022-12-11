@@ -1,133 +1,193 @@
--- DROP VIEW Movies;
-DROP TABLE People;
-DROP TABLE Movies_base;
-DROP TABLE Actors;
-DROP TABLE Directors;
-DROP TABLE Categories;
-DROP TABLE MovieCategories;
-DROP TABLE Supports;
-DROP TABLE Users;
-DROP TABLE Rentals;
-DROP TABLE Cards;
-DROP TABLE CategorieRestrictions;
-
-CREATE TABLE People(
-    firstName VARCHAR(50),
-    lastName VARCHAR(50),
-    CONSTRAINT People_PK PRIMARY KEY (firstName, lastName)
+CREATE TABLE Actors(
+    firstName VARCHAR2(50),
+    lastName VARCHAR2(50),
+    CONSTRAINT Actors_PK PRIMARY KEY (firstName, lastName)
 );
 
 CREATE TABLE Movies_base(
-    movieID INTEGER PRIMARY KEY,
-    title VARCHAR(50) NOT NULL,
-    releaseDate DATE NOT NULL,
-    ageRestriction INTEGER NOT NULL,
-    poster VARCHAR(50),
-    CONSTRAINT movieID_CK CHECK (movieID >= 0),
-    CONSTRAINT movieAgeRestriction_CK CHECK (ageRestriction >= 0)
+    movieID INTEGER,
+    title VARCHAR2(50) NOT NULL,
+    directorFirstName VARCHAR2(50) NOT NULL,
+    directorLastName VARCHAR2(50) NOT NULL,
+    CONSTRAINT Movies_PK PRIMARY KEY (movieID),
+    CONSTRAINT movieID_CK CHECK (movieID >= 0)
 );
 
-CREATE TABLE Actors(
-    firstName VARCHAR(50),
-    lastName VARCHAR(50),
+CREATE TABLE ActorsMovies(
+    firstName VARCHAR2(50),
+    lastName VARCHAR2(50),
     movieID INTEGER,
-    CONSTRAINT Actors_PK PRIMARY KEY (firstName, lastName, movieID),
-    CONSTRAINT Actors_People_FK FOREIGN KEY (firstName, lastName) REFERENCES People(firstName, lastName),
-    CONSTRAINT Actors_Movies_FK FOREIGN KEY (movieID) REFERENCES Movies_base(movieID)
-);
-
-CREATE TABLE Directors(
-    firstName VARCHAR(50),
-    lastName VARCHAR(50),
-    movieID INTEGER,
-    CONSTRAINT Directors_PK PRIMARY KEY (firstName, lastName, movieID),
-    CONSTRAINT Directors_People_FK FOREIGN KEY (firstName, lastName) REFERENCES People(firstName, lastName),
-    CONSTRAINT Directors_Movies_FK FOREIGN KEY (movieID) REFERENCES Movies_base(movieID)
+    CONSTRAINT ActorsMovies_PK PRIMARY KEY (firstName, lastName, movieID),
+    CONSTRAINT ActorsMovies_name_FK FOREIGN KEY (firstName, lastName) REFERENCES Actors(firstName, lastName),
+    CONSTRAINT ActorsMovies_movieID_FK FOREIGN KEY (movieID) REFERENCES Movies_base(movieID)
 );
 
 CREATE TABLE Categories(
-    category VARCHAR(50) PRIMARY KEY
+    categoryName VARCHAR2(50),
+    CONSTRAINT Categories_PK PRIMARY KEY (categoryName)
 );
 
-CREATE TABLE MovieCategories(
+CREATE TABLE MoviesCategories(
     movieID INTEGER,
-    category VARCHAR(50),
-    CONSTRAINT MovieCategories_PK PRIMARY KEY (movieID, category),
-    CONSTRAINT MovieCategories_Movies_FK FOREIGN KEY (movieID) REFERENCES Movies_base(movieID),
-    CONSTRAINT MovieCategories_Categories_FK FOREIGN KEY (category) REFERENCES Categories(category)
+    categoryName VARCHAR2(50),
+    CONSTRAINT MoviesCategories_PK PRIMARY KEY (movieID, categoryName),
+    CONSTRAINT MoviesCategories_movieID_FK FOREIGN KEY (movieID) REFERENCES Movies_base(movieID),
+    CONSTRAINT MoviesCategories_categoryName_FK FOREIGN KEY (categoryName) REFERENCES Categories(categoryName)
 );
 
-CREATE TABLE Supports(
-    supportID INTEGER PRIMARY KEY,
-    supportType VARCHAR(50) NOT NULL,
-    available INTEGER(1) NOT NULL,
-    readableDisk INTEGER(1),
-    lostDisk INTEGER(1),
-    streamAddress VARCHAR(50),
+CREATE TABLE Supports_base(
+    supportID INTEGER,
+    supportType VARCHAR2(50) NOT NULL,
+    damagedDisk INTEGER,
+    lostDisk INTEGER,
+    streamAddress VARCHAR2(50),
     movieID INTEGER NOT NULL,
+    CONSTRAINT Supports_PK PRIMARY KEY (supportID),
     CONSTRAINT supportID_CK CHECK (supportID >= 0),
-    CONSTRAINT supportType_CK CHECK (supportType IN ('physical', 'dematerialised')),
-    CONSTRAINT available_CK CHECK (available = 0 OR available = 1),
-    CONSTRAINT readableDisk_CK CHECK (readableDisk = 0 OR readableDisk = 1),
+    CONSTRAINT supportType_CK CHECK (
+        (supportType = 'BluRay' AND damagedDisk IS NOT NULL AND lostDisk IS NOT NULL AND streamAddress IS NULL) OR
+        (supportType = 'QRCode' AND damagedDisk IS NULL AND lostDisk IS NULL AND streamAddress IS NOT NULL)),
+    CONSTRAINT damagedDisk_CK CHECK (damagedDisk = 0 OR damagedDisk = 1),
     CONSTRAINT lostDisk_CK CHECK (lostDisk = 0 OR lostDisk = 1),
-    CONSTRAINT Supports_Movies_FK FOREIGN KEY (movieID) REFERENCES Movies_base(movieID) -- TODO: Trigger
+    CONSTRAINT Supports_movieID_FK FOREIGN KEY (movieID) REFERENCES Movies_base(movieID)
 );
 
-CREATE TABLE Users(
-    userID INTEGER PRIMARY KEY,
-    firstName VARCHAR(50) NOT NULL,
-    lastName VARCHAR(50) NOT NULL,
-    address VARCHAR(50) NOT NULL,
-    birthDate DATE NOT NULL,
-    subscriber INTEGER(1) NOT NULL,
+CREATE TABLE Users_base(
+    userID INTEGER,
+    firstName VARCHAR2(50) NOT NULL,
+    lastName VARCHAR2(50) NOT NULL,
+    address VARCHAR2(50) NOT NULL,
+    subscriber INTEGER NOT NULL,
+    CONSTRAINT userID_PK PRIMARY KEY (userID),
     CONSTRAINT userID_CK CHECK (userID >= 0),
     CONSTRAINT subscriber_CK CHECK (subscriber = 0 OR subscriber = 1)
 );
 
+CREATE TABLE CreditCards(
+    cardNumber INTEGER,
+    holder VARCHAR2(50) NOT NULL,
+    CCV INTEGER NOT NULL,
+    expiryDate DATE NOT NULL,
+    userID INTEGER NOT NULL,
+    CONSTRAINT CreditCards PRIMARY KEY (cardNumber),
+    CONSTRAINT cardNumber_CK CHECK (cardNumber >= 0 AND cardNumber < 10000000000000000),
+    CONSTRAINT CCV_CK CHECK (CCV >= 0 AND CCV < 1000),
+    CONSTRAINT CreditCards_userID_FK FOREIGN KEY (userID) REFERENCES Users_base(userID)
+);
+
+CREATE TABLE SubscriptionCards(
+    cardID INTEGER,
+    balance FLOAT NOT NULL,
+    userID INTEGER NOT NULL,
+    CONSTRAINT SubscriptionCards PRIMARY KEY (cardID),
+    CONSTRAINT cardID_CK CHECK (cardID >= 0),
+    CONSTRAINT SubscriptionCards_userID_FK FOREIGN KEY (userID) REFERENCES Users_base(userID)
+);
+
+CREATE TABLE CategoriesRestrictions(
+    cardID INTEGER,
+    categoryName VARCHAR2(50) NOT NULL,
+    CONSTRAINT CategoriesRestrictions_PK PRIMARY KEY (cardID, categoryName),
+    CONSTRAINT CategoriesRestrictions_cardID_FK FOREIGN KEY (cardID) REFERENCES SubscriptionCards(cardID),
+    CONSTRAINT CategoriesRestrictions_categoryName_FK FOREIGN KEY (categoryName) REFERENCES Categories(categoryName)
+);
+
 CREATE TABLE Rentals(
-    rentalID INTEGER PRIMARY KEY,
+    rentalID INTEGER,
     startDate DATE NOT NULL,
-    endDate DATE,
+    endDate DATE NOT NULL,
     price FLOAT NOT NULL,
     userID INTEGER NOT NULL,
     supportID INTEGER NOT NULL,
---     CONSTRAINT Rentals_UC UNIQUE (startDate, supportID), TODO: Vérifier contraintes
+    cardNumber INTEGER,
+    cardID INTEGER,
+    CONSTRAINT Rentals_PK PRIMARY KEY (rentalID),
     CONSTRAINT rentalID_CK CHECK (rentalID >= 0),
     CONSTRAINT price_CK CHECK (price >= 0),
-    CONSTRAINT Rentals_Users_FK FOREIGN KEY (userID) REFERENCES Users(userID),
-    CONSTRAINT Rentals_Supports_FK FOREIGN KEY (supportID) REFERENCES Supports(supportID)
+    CONSTRAINT card_CK CHECK ((cardNumber IS NULL AND cardID IS NOT NULL) OR
+                              (cardNumber IS NOT NULL AND cardID IS NULL)),
+    CONSTRAINT Rentals_userID_FK FOREIGN KEY (userID) REFERENCES Users_base(userID),
+    CONSTRAINT Rentals_supportID_FK FOREIGN KEY (supportID) REFERENCES Supports_base(supportID),
+    CONSTRAINT Rentals_cardNumber_FK FOREIGN KEY (cardNumber) REFERENCES CreditCards(cardNumber),
+    CONSTRAINT Rentals_cardID_FK FOREIGN KEY (cardID) REFERENCES SubscriptionCards(cardID)
 );
 
-CREATE TABLE Cards(
-    cardID INTEGER PRIMARY KEY,
-    balance FLOAT NOT NULL,
-    ageRestriction INTEGER,
-    userID INTEGER NOT NULL,
-    CONSTRAINT cardID_CK CHECK (cardID >= 0),
-    CONSTRAINT cardAgeRestriction CHECK (ageRestriction >= 0),
-    CONSTRAINT Cards_Users_FK FOREIGN KEY (userID) REFERENCES Users(userID)
-);
+CREATE VIEW Supports AS
+    WITH TotalRentals AS (
+        SELECT supportID, COUNT(rentalID) AS totalRentals
+        FROM Rentals
+        GROUP BY supportID
+    ), WeekRentals AS (
+        SELECT supportID, COUNT(rentalID) AS weekRentals
+        FROM Rentals
+        WHERE to_number(startDate) >= (SELECT to_number(to_char(systimestamp,'yyyymmdd')) - 604800 FROM dual)
+        GROUP BY supportID
+    ), MonthRentals AS (
+        SELECT supportID, COUNT(rentalID) AS monthRentals
+        FROM Rentals
+        WHERE to_number(startDate) >= (SELECT to_number(to_char(systimestamp, 'yyyymmdd')) - 2592000 FROM dual)
+        GROUP BY supportID
+    ), Unavailable AS (
+        SELECT supportID, 0 AS available
+        FROM Rentals
+        WHERE to_number(endDate) > (SELECT to_number(to_char(systimestamp, 'yyyymmdd')) FROM dual)
+    ), Available AS (
+        SELECT supportID, available
+        FROM Unavailable
+        UNION
+        SELECT supportID, 1 AS available
+        FROM Supports_base
+        WHERE supportID NOT IN (SELECT supportID FROM Unavailable)
+    )
+    SELECT supportID, supportType, damagedDisk, lostDisk, streamAddress, movieID,
+           available, totalRentals, weekRentals, monthRentals
+    FROM Supports_base
+        JOIN Available USING (supportID)
+        JOIN TotalRentals USING (supportID)
+        JOIN WeekRentals USING (supportID)
+        JOIN MonthRentals USING (supportID)
+;
 
-CREATE TABLE CategorieRestrictions(
-    cardID INTEGER,
-    category VARCHAR(50),
-    CONSTRAINT CategoriesRestrictions_PK PRIMARY KEY (cardID, category),
-    CONSTRAINT CategoriesRestrictions_Cards_FK FOREIGN KEY (cardID) REFERENCES Cards(cardID),
-    CONSTRAINT CategoriesRestrictions_Categories_FK FOREIGN KEY (category) REFERENCES Categories(category)
-);
+CREATE VIEW Movies AS
+    WITH TotalRentals AS (
+        SELECT movieID, SUM(totalRentals) AS totalRentals
+        FROM Supports
+        GROUP BY movieID
+    ), WeekRentals AS (
+        SELECT movieID, SUM(weekRentals) AS weekRentals
+        FROM Supports
+        GROUP BY movieID
+    ), MonthRentals AS (
+        SELECT movieID, SUM(monthRentals) AS monthRentals
+        FROM Supports
+        GROUP BY movieID
+    )
+    SELECT movieID, title, directorFirstName, directorLastName, totalRentals, weekRentals, monthRentals
+    FROM Movies_base
+        JOIN TotalRentals USING (movieID)
+        JOIN WeekRentals USING (movieID)
+        JOIN MonthRentals USING (movieID)
+;
 
--- CREATE VIEW Movies AS -- TODO: Ajouter thisMonthRentals
---     WITH Total AS (
---         SELECT movieID, COUNT(rentalID) AS totalRentals
---         FROM Movies_base JOIN Rentals USING (movieID)
---         GROUP BY movieID
---     )
---     SELECT
---         movieID,
---         title,
---         releaseDate,
---         ageRestriction,
---         poster,
---         totalRentals,
---     FROM Movies_base JOIN Total USING (movieID)
--- );
+CREATE VIEW USERS AS
+    WITH TotalRentals AS (
+        SELECT userID, COUNT(rentalID) AS totalRentals
+        FROM Rentals
+        GROUP BY userID
+    ), WeekRentals AS (
+        SELECT userID, COUNT(rentalID) AS weekRentals
+        FROM Rentals
+        WHERE to_number(startDate) >= (SELECT to_number(to_char(systimestamp,'yyyymmdd')) - 604800 FROM dual)
+        GROUP BY userID
+    ), MonthRentals AS (
+        SELECT userID, COUNT(rentalID) AS monthRentals
+        FROM Rentals
+        WHERE to_number(startDate) >= (SELECT to_number(to_char(systimestamp, 'yyyymmdd')) - 2592000 FROM dual)
+        GROUP BY userID
+    )
+    SELECT userID, firstName, lastName, address, subscriber, totalRentals, weekRentals, monthRentals
+    FROM Users_base
+        JOIN TotalRentals USING (userID)
+        JOIN WeekRentals USING (userID)
+        JOIN MonthRentals USING (userID)
+;
