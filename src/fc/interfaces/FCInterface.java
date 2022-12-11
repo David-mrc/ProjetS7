@@ -30,7 +30,7 @@ public class FCInterface {
         return dbi.getMovieListQR();
     }
 
-    public void  searchUnavailableMovie(String s){
+    public void  searchUnavailableMovie(String s){ // c quoi
 
     }
     public void  getWeeklyTopRentals(Integer i){
@@ -51,10 +51,10 @@ public class FCInterface {
     public void  topUpCard(){
 
     }
-    public void  getHistory(){
-
+    public ArrayList<Movie> getHistory(){
+        return dbi.getHistory(this.user);
     }
-    public void  getBalance() {
+    public void getBalance() {
 
     }
     public void  login(String firstName, String lastName){

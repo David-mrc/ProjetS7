@@ -55,7 +55,9 @@ public class DBInterface {
             return false;
         }
 
-
+        public ArrayList<Movie> getHistory(User user){
+            return facadeMovie.getHistory(user.getUserID());
+        }
 
 
 }

@@ -242,4 +242,30 @@ public class DAOFacadeMovie {
         return movies;
     }
 
+    public ArrayList<Movie> getHistory(int userID){ // All movies available on BluRay
+
+        ArrayList<Movie> movies = new ArrayList<>();
+
+        try {
+            PreparedStatement MovieStatement = conn.prepareStatement("SELECT * FROM Movies_base WHERE movieID IN " +
+                    "(SELECT * FROM RENTALS WHERE userID = ?) ");
+            MovieStatement.setInt(1, userID);
+            ResultSet MovieResult = MovieStatement.executeQuery();
+
+            while(MovieResult.next()) {
+                Movie movie = new Movie();
+
+                movie.setId(MovieResult.getInt(1));
+                movie.setTitle(MovieResult.getString(2));
+                movie.setDirectorLastname(MovieResult.getString(3));
+                movie.setDirectorFirstname(MovieResult.getString(4));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return movies;
+    }
+
 }
