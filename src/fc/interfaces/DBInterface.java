@@ -41,7 +41,9 @@ public class DBInterface {
             return facadeMovie.getMovieListBR();
         }
 
-
+        public User logUserIn(String firstName, String lastName){
+            return facadeUser.login(firstName, lastName);
+        }
 
 
 

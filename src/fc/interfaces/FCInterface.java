@@ -62,8 +62,8 @@ public class FCInterface {
     public void  getBalance() {
 
     }
-    public void  login(){
-
+    public void  login(String firstName, String lastName){
+        this.user = dbi.logUserIn(firstName, lastName);
     }
     public void  logout(){
 
