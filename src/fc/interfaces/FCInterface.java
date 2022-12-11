@@ -8,12 +8,7 @@ public class FCInterface {
     App a;
     CyberVideoInterface cvi;
     DBInterface dbi;
-
     User user;
-
-    ArrayList<Movie> moviesList;
-    ArrayList<MovieCategories> movieCategories;
-
 
     public FCInterface(App a, CyberVideoInterface cvi, DBInterface dbi){
         this.a = a;
@@ -66,10 +61,21 @@ public class FCInterface {
         this.user = dbi.logUserIn(firstName, lastName);
     }
     public void  logout(){
-
+        this.user = null;
     }
-    public void  createAccount(){
+    public boolean createAccount(String firstName, String lastName, String address){
+        User newUser = new User();
+        newUser.setUserID(10);  // a changer //// important
+        newUser.setFirstname(firstName);
+        newUser.setLastName(lastName);
+        newUser.setAddress(address);
+        newUser.setSubscriber(false);
 
+        if(dbi.createAccount(newUser)){
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }

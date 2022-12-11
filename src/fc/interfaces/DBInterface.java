@@ -16,6 +16,7 @@ public class DBInterface {
     DAOFacadeSupport facadeSupport;
     DAOFacadeMovie facadeMovie;
     DAOFacadeUser facadeUser;
+    DAOUser daoUser;
 
 
         public DBInterface() {
@@ -27,6 +28,7 @@ public class DBInterface {
             facadeMovie = new DAOFacadeMovie(conn);
             facadeSupport = new DAOFacadeSupport(conn);
             facadeUser = new DAOFacadeUser(conn);
+            daoUser = new DAOUser(conn);
         }
 
         public ArrayList<Movie> getMovieList(){
@@ -45,6 +47,14 @@ public class DBInterface {
             return facadeUser.login(firstName, lastName);
         }
 
+        public boolean createAccount(User user){
+            try {
+                return daoUser.create(user);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return false;
+        }
 
 
 
