@@ -56,6 +56,15 @@ public class DAOUser extends DAO<User>{
 
     @Override
     public boolean update(User obj) throws SQLException {
+        try( PreparedStatement preparedStatement = conn.prepareStatement(
+                "UPDATE USERS_BASE SET ADDRESS = ?, SUBSCRIBER = ? WHERE USERID = ? ")) {
+            preparedStatement.setString(1, obj.getAddress());
+            preparedStatement.setInt(2, obj.isSubscriber() ? 1 : 0);
+            preparedStatement.setInt(3,obj.getUserID());
+            return preparedStatement.executeUpdate() > 0;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
         return false;
     }
 

@@ -1,6 +1,10 @@
 package fc;
 
+import dao.DAOFacadeUser;
+import dao.DAOUser;
+
 import java.sql.Date;
+import java.sql.SQLException;
 
 public class User {
     private int userID;
@@ -9,6 +13,7 @@ public class User {
     private String address;
     private Date birthday;
     private boolean subscriber;
+    private DAOFacadeUser dao;
 
     @Override
     public String toString() {
@@ -61,5 +66,22 @@ public class User {
 
     public void setSubscriber(boolean subscriber) {
         this.subscriber = subscriber;
+    }
+
+    public void rentMovie(Support support,Cards cards){
+        try {
+            dao.rentMovie(this,support,cards);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void requestSubscriberCard(){
+        try {
+            dao.requestSubscriberCard(this);
+            System.out.println("Asking for a new subscription Card");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

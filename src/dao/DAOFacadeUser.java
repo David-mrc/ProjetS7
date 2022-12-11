@@ -1,11 +1,10 @@
 package dao;
 
 
-import fc.Cards;
-import fc.Support;
-import fc.User;
+import fc.*;
 
 import java.sql.*;
+import java.util.Random;
 
 public class DAOFacadeUser {
 
@@ -52,30 +51,44 @@ public class DAOFacadeUser {
         return user;
     }
 
-    public boolean create(User obj) throws SQLException {
-        try( PreparedStatement preparedStatement = conn.prepareStatement(
-                "INSERT INTO USERS VALUES (USERID = ? , FIRSTNAME = ? , LASTNAME = ? , ADDRESS = ?, SUBSCRIBER) ")) {
-            preparedStatement.setInt(1, obj.getUserID());
-            preparedStatement.setString(2, obj.getFirstname());
-            preparedStatement.setString(3, obj.getLastName());
-            preparedStatement.setString(4, obj.getAddress());
-            preparedStatement.setInt(5,obj.isSubscriber() ? 1 : 0);
-            return preparedStatement.executeUpdate() > 0;
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+    public boolean create(User user) throws SQLException {
+        DAOUser daoUser = new DAOUser(conn);
+        return daoUser.create(user);
+    }
+
+    //ToDo :
+    public void rentMovie(User user,Support support, Cards card) throws SQLException {
+        DAORentals daoRentals = new DAORentals(conn);
+        Rental rental = new Rental();
+        Random random = new Random();
+        rental.setId(random.nextInt(1000000000)); // ON devrait aller voir dans la base...
+        rental.setSupportid(support.getSupportID());
+        rental.setUserid(user.getUserID());
+        if (card.getType() == "Subscription"){
+            rental.setPrice(3);
+            rental.setCardID(card.getID());
+        } else {
+            rental.setPrice(5);
+            rental.setCardnumber(card.getID());
         }
-        return false;
-    }
+        rental.setStartDate(new Date(System.currentTimeMillis()));
 
-    //ToDo :
-    public void rentMovie(User user,Support support, Cards card){
-
+        daoRentals.create(rental);
 
     }
-
     //ToDo :
-    public void requestSubscriberCard(){
-
+    public void requestSubscriberCard(User user) throws SQLException {
+        DAOSubscriptionCards daoSubscriptionCards = new DAOSubscriptionCards(conn);
+        SubscriptionCard subscriptionCard = new SubscriptionCard();
+        Random random = new Random();
+        subscriptionCard.setCardId(random.nextInt(1000000000));
+        subscriptionCard.setUserId(user.getUserID());
+        if (!user.isSubscriber()) {
+            DAOUser daoUser = new DAOUser(conn);
+            user.setSubscriber(true);
+            daoUser.update(user);
+        }
+        daoSubscriptionCards.create(subscriptionCard);
     }
 
 
