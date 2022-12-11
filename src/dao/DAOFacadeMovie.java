@@ -132,4 +132,40 @@ public class DAOFacadeMovie {
 
     }
 
+    public boolean isAvailableAsQRCode(Movie m) {
+        try {
+            PreparedStatement availableQRcode = conn.prepareStatement("SELECT SUPPORTID FROM SUPPORTS WHERE MovieID = ? AND AVAILABLE = 1 AND SUPPORTTYPE='QRCode'");
+            availableQRcode.setInt(1, m.getId());
+            ResultSet resultSet = availableQRcode.executeQuery();
+
+
+            if (resultSet.next()) {
+                return true;
+            }
+            return false;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean isAvailableAsBluRay(Movie m) {
+        try {
+            PreparedStatement availableBluRay = conn.prepareStatement("SELECT SUPPORTID FROM SUPPORTS WHERE MovieID = ? AND AVAILABLE = 1 AND SUPPORTTYPE='BluRay'");
+            availableBluRay.setInt(1, m.getId());
+            ResultSet resultSet = availableBluRay.executeQuery();
+
+
+            if (resultSet.next()) {
+                return true;
+            }
+            return false;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
 }

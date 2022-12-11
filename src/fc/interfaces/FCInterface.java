@@ -9,6 +9,12 @@ public class FCInterface {
     CyberVideoInterface cvi;
     DBInterface dbi;
 
+    User user;
+
+    ArrayList<Movie> moviesList;
+    ArrayList<MovieCategories> movieCategories;
+
+
     public FCInterface(App a, CyberVideoInterface cvi, DBInterface dbi){
         this.a = a;
         this.cvi = cvi;
@@ -53,7 +59,7 @@ public class FCInterface {
     public void  getBalance() {
 
     }
-    public void  login(){
+    public void  login(String username, String password){
 
     }
     public void  logout(){

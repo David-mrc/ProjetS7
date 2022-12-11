@@ -41,7 +41,7 @@ public class Movie {
     }
 
     public boolean isAvailableAsBluRay(){
-        return dao.getAvailableBluRay(this) !=null;
+        return dao.getAvailableBluRay(this) != null;
     }
 
     public boolean isAvailableAsQRCode(){
