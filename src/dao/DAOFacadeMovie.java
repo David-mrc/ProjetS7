@@ -13,9 +13,9 @@ import java.util.ArrayList;
 
 public class DAOFacadeMovie {
 
-    protected Connection conn;
+    public Connection conn;
 
-    protected DAOFacadeMovie(Connection conn) {
+    public DAOFacadeMovie(Connection conn) {
         this.conn = conn;
     }
 

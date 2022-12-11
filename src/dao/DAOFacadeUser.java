@@ -10,9 +10,9 @@ import java.sql.*;
 public class DAOFacadeUser {
 
 
-    protected Connection conn;
+    public Connection conn;
 
-    protected DAOFacadeUser(Connection conn) {
+    public DAOFacadeUser(Connection conn) {
         this.conn = conn;
     }
 

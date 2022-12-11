@@ -8,9 +8,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class DAOFacadeSupport {
-    protected Connection conn;
+    public Connection conn;
 
-    protected DAOFacadeSupport(Connection conn) {
+    public DAOFacadeSupport(Connection conn) {
         this.conn = conn;
     }
 
