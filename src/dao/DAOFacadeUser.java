@@ -5,10 +5,7 @@ import fc.Cards;
 import fc.Support;
 import fc.User;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class DAOFacadeUser {
 
@@ -31,7 +28,8 @@ public class DAOFacadeUser {
     }
 
     //ToDo :
-    public void rentMovie(Support support, Cards card){
+    public void rentMovie(User user,Support support, Cards card){
+
 
     }
 
