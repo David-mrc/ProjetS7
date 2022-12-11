@@ -34,7 +34,7 @@ public class DAOSupport extends DAO<Support> {
     }
 
     @Override
-    public Support read(Object supportID) {
+    public Support read(Object supportID) throws SQLException {
         Support support = null;
 
         try (PreparedStatement Support = conn.prepareStatement("SELECT SUPPORTTYPE, DAMAGEDDISK, LOSTDISK, STREAMADDRESS, MOVIEID, AVAILABLE FROM SUPPORTS WHERE SUPPORTID = ?")){
