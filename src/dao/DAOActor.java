@@ -15,10 +15,9 @@ public class DAOActor extends DAO<Actor>{
     @Override
     public boolean create(Actor obj) throws SQLException {
         try( PreparedStatement preparedStatement = conn.prepareStatement(
-                "INSERT INTO ACTORS VALUES id = ? , firstName = ? , lastName = ? ")) {
-            preparedStatement.setInt(1, obj.getId());
-            preparedStatement.setString(2, obj.getFirstName());
-            preparedStatement.setString(3, obj.getLastName());
+                "INSERT INTO ACTORS VALUES (firstName = ? , lastName = ? )")) {
+            preparedStatement.setString(1, obj.getFirstName());
+            preparedStatement.setString(2, obj.getLastName());
 
             return preparedStatement.executeUpdate() > 0;
         } catch (SQLException throwables) {
@@ -52,7 +51,7 @@ public class DAOActor extends DAO<Actor>{
 
     @Override
     public boolean update(Actor obj) throws SQLException {
-        try( PreparedStatement preparedStatement = conn.prepareStatement(
+        /*try( PreparedStatement preparedStatement = conn.prepareStatement(
                 "UPDATE ACTORS SET firstName = ? , lastName = ? WHERE id = ?")) {
             preparedStatement.setString(1, obj.getFirstName());
             preparedStatement.setString(2, obj.getLastName());
@@ -61,7 +60,7 @@ public class DAOActor extends DAO<Actor>{
             return preparedStatement.executeUpdate() > 0;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-        }
+        }*/
         return false;
     }
 
