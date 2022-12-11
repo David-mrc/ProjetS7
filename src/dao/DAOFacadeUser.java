@@ -52,6 +52,21 @@ public class DAOFacadeUser {
         return user;
     }
 
+    public boolean create(User obj) throws SQLException {
+        try( PreparedStatement preparedStatement = conn.prepareStatement(
+                "INSERT INTO USERS VALUES (USERID = ? , FIRSTNAME = ? , LASTNAME = ? , ADDRESS = ?, SUBSCRIBER) ")) {
+            preparedStatement.setInt(1, obj.getUserID());
+            preparedStatement.setString(2, obj.getFirstname());
+            preparedStatement.setString(3, obj.getLastName());
+            preparedStatement.setString(4, obj.getAddress());
+            preparedStatement.setInt(5,obj.isSubscriber() ? 1 : 0);
+            return preparedStatement.executeUpdate() > 0;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return false;
+    }
+
     //ToDo :
     public void rentMovie(User user,Support support, Cards card){
 
