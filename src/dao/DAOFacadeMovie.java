@@ -92,23 +92,43 @@ public class DAOFacadeMovie {
 
     }
 
-    public BluRay getAvailableBluRay(int movieID){
-        BluRay br = null;
+    public Support getAvailableBluRay(Movie m){
+        Support br = null;
         DAOSupport daoSupport = new DAOSupport(conn);
         try {
-            PreparedStatement availableBluRay = conn.prepareStatement("SELECT SUPPORTID FROM SUPPORTS WHERE MovieID = ? AND AVAILABLE = 1");
-            availableBluRay.setInt(1, movieID);
+            PreparedStatement availableBluRay = conn.prepareStatement("SELECT SUPPORTID FROM SUPPORTS WHERE MovieID = ? AND AVAILABLE = 1 AND SUPPORTTYPE='BluRay'");
+            availableBluRay.setInt(1, m.getId());
             ResultSet resultSet = availableBluRay.executeQuery();
 
 
             if (resultSet.next()) {
-                br = (BluRay) daoSupport.read(resultSet.getInt(1));
+                br = daoSupport.read(resultSet.getInt(1));
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return br;
+
+    }
+
+    public Support getAvailableQRCode(Movie m){
+        Support qrc = null;
+        DAOSupport daoSupport = new DAOSupport(conn);
+        try {
+            PreparedStatement availableQRcode = conn.prepareStatement("SELECT SUPPORTID FROM SUPPORTS WHERE MovieID = ? AND AVAILABLE = 1 AND SUPPORTTYPE='QRCode'");
+            availableQRcode.setInt(1, m.getId());
+            ResultSet resultSet = availableQRcode.executeQuery();
+
+
+            if (resultSet.next()) {
+                qrc = daoSupport.read(resultSet.getInt(1));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return qrc;
 
     }
 
