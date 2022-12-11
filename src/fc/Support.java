@@ -4,10 +4,10 @@ public abstract class Support {
     private String supportType;
     private int supportID;
     private boolean available;
-    private boolean readableDisk;
     private boolean lostDisk;
     private String streamAddress;
     private int MovieID;
+    private boolean damagedDisk;
 
     public boolean isAvailable(){
         return available;
@@ -35,14 +35,6 @@ public abstract class Support {
         this.available = available;
     }
 
-    public boolean isReadableDisk() {
-        return readableDisk;
-    }
-
-    public void setReadableDisk(boolean readableDisk) {
-        this.readableDisk = readableDisk;
-    }
-
     public boolean isLostDisk() {
         return lostDisk;
     }
@@ -65,6 +57,13 @@ public abstract class Support {
 
     public void setMovieId(int movieID) {
         MovieID = movieID;
+    }
+    public boolean isDamagedDisk() {
+        return damagedDisk;
+    }
+
+    public void setDamagedDisk(boolean damagedDisk) {
+        this.damagedDisk = damagedDisk;
     }
 
     public String toString(){

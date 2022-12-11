@@ -1,6 +1,7 @@
 package dao;
 
 import fc.Actor;
+import fc.BluRay;
 import fc.Movie;
 import fc.Support;
 
@@ -88,6 +89,26 @@ public class DAOFacadeMovie {
             e.printStackTrace();
         }
         return monthlyRentals;
+
+    }
+
+    public BluRay getAvailableBluRay(int movieID){
+        BluRay br = null;
+        DAOSupport daoSupport = new DAOSupport(conn);
+        try {
+            PreparedStatement availableBluRay = conn.prepareStatement("SELECT SUPPORTID FROM SUPPORTS WHERE MovieID = ? AND AVAILABLE = 1");
+            availableBluRay.setInt(1, movieID);
+            ResultSet resultSet = availableBluRay.executeQuery();
+
+
+            if (resultSet.next()) {
+                br = (BluRay) daoSupport.read(resultSet.getInt(1));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return br;
 
     }
 
