@@ -15,7 +15,7 @@ public class DAOMovieCategories extends DAO<MovieCategories> {
     @Override
     public boolean create(MovieCategories obj) {
         try( PreparedStatement preparedStatement = conn.prepareStatement(
-                "INSERT INTO MOVIECATEGORIES VALUES ( movieId = ? , category = ? )"))
+                "INSERT INTO MOVIESCATEGORIES VALUES ( MOVIEID = ? , CATEGORYNAME = ? )"))
         {
             preparedStatement.setInt(1, obj.getMovieID());
             preparedStatement.setString(2, obj.getCategory());
@@ -31,11 +31,12 @@ public class DAOMovieCategories extends DAO<MovieCategories> {
     public MovieCategories read(Object movieId) {
         MovieCategories movieCategories = null;
 
-        try (PreparedStatement MovieCategories = conn.prepareStatement("SELECT category FROM MOVIECATEGORIES WHERE movieId = ?")){
+        try (PreparedStatement MovieCategories = conn.prepareStatement("SELECT CATEGORYNAME FROM MOVIESCATEGORIES WHERE MOVIEID = ?")){
             MovieCategories.setInt(1, (Integer)movieId);
             ResultSet resultSet = MovieCategories.executeQuery();
 
             movieCategories = new MovieCategories();
+            movieCategories.setMovieID(((Integer) movieId));
             if (resultSet.next()) {
                 movieCategories.setCategory(resultSet.getString(1));
             }

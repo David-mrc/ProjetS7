@@ -1,4 +1,5 @@
 package dao;
+
 import fc.Actor;
 
 import java.sql.Connection;
@@ -6,16 +7,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class DAOActor extends DAO<Actor>{
+public class DAOActorsMovies extends DAO<Actor>{
 
-    protected DAOActor(Connection conn) {
+    protected DAOActorsMovies(Connection conn) {
         super(conn);
     }
 
     @Override
     public boolean create(Actor obj) throws SQLException {
         try( PreparedStatement preparedStatement = conn.prepareStatement(
-                "INSERT INTO ACTORS VALUES id = ? , firstName = ? , lastName = ? ")) {
+                "INSERT INTO ACTORSMOVIES VALUES (MOVIEID = ? , FIRSTNAME = ? , LASTNAME = ? )")) {
             preparedStatement.setInt(1, obj.getId());
             preparedStatement.setString(2, obj.getFirstName());
             preparedStatement.setString(3, obj.getLastName());
@@ -29,23 +30,23 @@ public class DAOActor extends DAO<Actor>{
 
     @Override
     public Actor read(Object obj) throws SQLException {
-        /*Actor actor = null;
+        Actor actor = null;
 
-        try (PreparedStatement Actor = conn.prepareStatement("SELECT id, firstName, lastName FROM ACTOR WHERE id = ?")){
+        try (PreparedStatement Actor = conn.prepareStatement("SELECT FIRSTNAME, LASTNAME FROM ACTORSMOVIES WHERE MOVIEID = ?")){
             Actor.setInt(1, (Integer) obj);
             ResultSet resultSet = Actor.executeQuery();
 
             actor = new Actor();
+            actor.setMovieID(((Integer) obj));
             if (resultSet.next()) {
-                actor.setId(resultSet.getInt(1));
-                actor.setFirstName(resultSet.getString(2));
-                actor.setLastName(resultSet.getString(3));
+                actor.setFirstName(resultSet.getString(1));
+                actor.setLastName(resultSet.getString(2));
 
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
-        }*/
+        }
 
         return null;
     }
@@ -53,7 +54,7 @@ public class DAOActor extends DAO<Actor>{
     @Override
     public boolean update(Actor obj) throws SQLException {
         try( PreparedStatement preparedStatement = conn.prepareStatement(
-                "UPDATE ACTORS SET firstName = ? , lastName = ? WHERE id = ?")) {
+                "UPDATE ACTORSMOVIES SET FIRSTNAME = ? , LASTNAME = ? WHERE MOVIEID = ?")) {
             preparedStatement.setString(1, obj.getFirstName());
             preparedStatement.setString(2, obj.getLastName());
             preparedStatement.setInt(3, obj.getId());

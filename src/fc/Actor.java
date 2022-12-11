@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 public class Actor {
 
-    private int id;
+    private int movieId;
     private String firstName;
     private String lastName;
 
@@ -12,11 +12,11 @@ public class Actor {
 
     @Override
     public String toString() {
-        return "id : " + id + " ; firstName : " + firstName + " ; lastName : " + lastName;
+        return "id : " + movieId + " ; firstName : " + firstName + " ; lastName : " + lastName;
     }
 
     public int getId() {
-        return id;
+        return movieId;
     }
 
     public String getFirstName() {
@@ -30,8 +30,8 @@ public class Actor {
     //SETTERS
 
 
-    public void setId(int id) {
-        this.id = id;
+    public void setMovieID(int id) {
+        this.movieId = id;
     }
 
     public void setFirstName(String firstName) {

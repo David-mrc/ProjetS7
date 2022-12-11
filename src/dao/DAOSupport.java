@@ -18,7 +18,7 @@ public class DAOSupport extends DAO<Support> {
     @Override
     public boolean create(Support obj) {
         try( PreparedStatement preparedStatement = conn.prepareStatement(
-                "INSERT INTO SUPPORTS VALUES ( supportId = ? , supportType = ? , available = ? , readableDisk = ? , lostDisk = ?, streamAddress = ?, movieId = ?) ")) {
+                "INSERT INTO SUPPORTS_BASE VALUES ( supportId = ? , supportType = ? , available = ? , readableDisk = ? , lostDisk = ?, streamAddress = ?, movieId = ?) ")) {
             preparedStatement.setInt(1, obj.getSupportID());
             preparedStatement.setString(2, obj.getSupportType());
             preparedStatement.setInt(3, obj.isAvailable() ? 1 :0);
@@ -38,7 +38,7 @@ public class DAOSupport extends DAO<Support> {
     public Support read(Object supportID) {
         Support support = null;
 
-        try (PreparedStatement Support = conn.prepareStatement("SELECT SUPPORTTYPE, AVAILABLE, READABLEDISK, LOSTDISK, STREAMADDRESS, MOVIEID FROM SUPPORTS WHERE SUPPORTID = ?")){
+        try (PreparedStatement Support = conn.prepareStatement("SELECT SUPPORTTYPE, DAMAGEDDISK, LOSTDISK, STREAMADDRESS, MOVIEID, AVAILABLE, TOTALRENTALS, WEEKRENTALS, MONTHRENTALS FROM SUPPORTS WHERE SUPPORTID = ?")){
             Support.setInt(1, (Integer)supportID);
             ResultSet resultSet = Support.executeQuery();
 
