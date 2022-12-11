@@ -8,6 +8,7 @@ public class FCInterface {
     App a;
     CyberVideoInterface cvi;
     DBInterface dbi;
+    User user;
 
     public FCInterface(App a, CyberVideoInterface cvi, DBInterface dbi){
         this.a = a;
@@ -17,16 +18,19 @@ public class FCInterface {
 
 
     //TODO: implement methods
-    public void getAvailableMovies(){
+    public ArrayList<Movie> getAvailableMovies(){
+        return dbi.getMovieList();
+    }
 
+    public ArrayList<Movie> getMoviesAvailableAsBluRay() {
+        return dbi.getMovieListBR();
     }
-    public ArrayList<String> getMoviesAvailableAsBluRay() {
-        return new ArrayList<String>();
-    }
-    public void getMoviesAvailableAsQRCode(){
 
+    public ArrayList<Movie> getMoviesAvailableAsQRCode(){
+        return dbi.getMovieListQR();
     }
-    public void  searchUnavailableMovie(String s){
+
+    public void  searchUnavailableMovie(String s){ // c quoi
 
     }
     public void  getWeeklyTopRentals(Integer i){
@@ -47,20 +51,31 @@ public class FCInterface {
     public void  topUpCard(){
 
     }
-    public void  getHistory(){
+    public ArrayList<Movie> getHistory(){
+        return dbi.getHistory(this.user);
+    }
+    public void getBalance() {
 
     }
-    public void  getBalance() {
-
-    }
-    public void  login(){
-
+    public void  login(String firstName, String lastName){
+        this.user = dbi.logUserIn(firstName, lastName);
     }
     public void  logout(){
-
+        this.user = null;
     }
-    public void  createAccount(){
+    public boolean createAccount(String firstName, String lastName, String address){
+        User newUser = new User();
+        newUser.setUserID(10);  // a changer //// important
+        newUser.setFirstname(firstName);
+        newUser.setLastName(lastName);
+        newUser.setAddress(address);
+        newUser.setSubscriber(false);
 
+        if(dbi.createAccount(newUser)){
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }
