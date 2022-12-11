@@ -1,14 +1,11 @@
-DROP VIEW Users;
-DROP VIEW Movies;
-DROP VIEW Supports;
 DROP TABLE Rentals;
 DROP TABLE CategoriesRestrictions;
 DROP TABLE SubscriptionCards;
 DROP TABLE CreditCards;
-DROP TABLE Users_base;
-DROP TABLE Supports_base;
+DROP TABLE Users;
+DROP TABLE Supports;
 DROP TABLE MoviesCategories;
 DROP TABLE Categories;
 DROP TABLE ActorsMovies;
 DROP TABLE Actors;
-DROP TABLE Movies_base;
+DROP TABLE Movies;
