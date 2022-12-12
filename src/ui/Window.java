@@ -45,6 +45,7 @@ public class Window extends JFrame {
         add(mainPane, BorderLayout.CENTER);
 
         openDefaultScreen();
+        pack();
     }
 
     void openDefaultScreen() {
