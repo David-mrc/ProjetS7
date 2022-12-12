@@ -25,24 +25,27 @@ public class AccountScreen extends Screen {
 
         JLabel address;
         if(currentUser.getAddress() != null){
-            address = createText("Address  -  " + " " + currentUser.getAddress());
+            address = createText("Address  -    "  + currentUser.getAddress());
         } else {
-            address = createText("Address  -  " + " " + "Not Given");
+            address = createText("Address  -    " + "Not Given");
         }
         add(address, BorderLayout.CENTER);
 
         JLabel dob;
         if(currentUser.getBirthday() != null){
-            dob = createText("Date of Birth  -  " + " " + currentUser.getBirthday());
+            dob = createText("Date of Birth  -    "  + currentUser.getBirthday());
         } else {
-            dob = createText("Date of Birth  -  " + " " + "Not Given");
+            dob = createText("Date of Birth  -    "  + "Not Given");
         }
         add(dob, BorderLayout.CENTER);
 
+        JLabel sub;
         if(currentUser.isSubscriber()) {
-            JLabel sub = createText("Proud Subscriber ! ");
-            add(sub, BorderLayout.CENTER);
+            sub = createText("Proud Subscriber ! ");
+        } else {
+            sub = createText("Not Subscribed ... ");
         }
+        add(sub, BorderLayout.CENTER);
 
         JLabel history = createTitle("Past Rentals - ");
         add(history, BorderLayout.CENTER);
@@ -57,7 +60,12 @@ public class AccountScreen extends Screen {
         }
         add(historyPane, BorderLayout.CENTER);
 
-        //TODO: add card status.
+        if(currentUser.isSubscriber()) {
+            JLabel cards = createTitle("Subscriber Card - ");
+            add(cards, BorderLayout.CENTER);
+            JLabel balance = createText("Balance - " + fc.getBalance() + "€");
+            add(balance, BorderLayout.CENTER);
+        }
     }
 
     private JLabel createText(String text) {
