@@ -11,6 +11,7 @@ public class DBInterface {
     String user="bultincl";
     String passwd="e5f05c6c48";
 
+    CyberVideoInterface cvi;
     Connection conn;
 
     DAOFacadeSupport facadeSupport;
@@ -28,6 +29,8 @@ public class DBInterface {
             facadeMovie = new DAOFacadeMovie(conn);
             facadeSupport = new DAOFacadeSupport(conn);
             facadeUser = new DAOFacadeUser(conn);
+
+            this.cvi = new CyberVideoInterface();
         }
 
         public ArrayList<Movie> getMovieList(){
@@ -59,6 +62,13 @@ public class DBInterface {
             return facadeMovie.getHistory(user.getUserID());
         }
 
+        public boolean rentMovie(User user,Support support, Cards cards){
+            return true;
+        }
+
+        public boolean requestSubscriberCard(User user){
+            return cvi.requestSubscriberCard(user);
+        }
 
 }
 

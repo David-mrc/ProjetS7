@@ -4,12 +4,11 @@ import fc.*;
 import java.util.ArrayList;
 
 public class FCInterface {
-    CyberVideoInterface cvi;
+
     DBInterface dbi;
     User user;
 
     public FCInterface(CyberVideoInterface cvi, DBInterface dbi){
-        this.cvi = cvi;
         this.dbi = dbi;
     }
 
@@ -61,7 +60,7 @@ public class FCInterface {
         this.user = null;
     }
     public boolean createAccount(String firstName, String lastName, String address){
-        User newUser = new User();
+        User newUser = new User(this.dbi);
         newUser.setUserID(10);  // a changer //// important
         newUser.setFirstname(firstName);
         newUser.setLastName(lastName);
@@ -69,10 +68,18 @@ public class FCInterface {
         newUser.setSubscriber(false);
 
         if(dbi.createAccount(newUser)){
+            this.user = newUser;
             return true;
         } else {
             return false;
         }
+    }
+
+    public boolean requestSubscriberCard(){
+        if(this.user == null){
+            throw new RuntimeException("No user logged in error");
+        }
+        return this.user.requestSubscriberCard();
     }
 
 }

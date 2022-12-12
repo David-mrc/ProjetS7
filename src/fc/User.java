@@ -2,6 +2,7 @@ package fc;
 
 import dao.DAOFacadeUser;
 import dao.DAOUser;
+import fc.interfaces.DBInterface;
 
 import java.sql.Date;
 import java.sql.SQLException;
@@ -13,7 +14,12 @@ public class User {
     private String address;
     private Date birthday;
     private boolean subscriber;
-    private DAOFacadeUser dao;
+    private DBInterface dao;
+
+    public User(DBInterface dao){
+        this.dao = dao;
+    }
+    public User(){}
 
     @Override
     public String toString() {
@@ -68,20 +74,12 @@ public class User {
         this.subscriber = subscriber;
     }
 
-    public void rentMovie(Support support,Cards cards){
-        try {
-            dao.rentMovie(this,support,cards);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public boolean rentMovie(Support support,Cards cards){
+            return dao.rentMovie(this,support,cards);
     }
 
-    public void requestSubscriberCard(){
-        try {
-            dao.requestSubscriberCard(this);
-            System.out.println("Asking for a new subscription Card");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public boolean requestSubscriberCard(){
+        System.out.println("Asking for a new subscription Card");
+        return dao.requestSubscriberCard(this);
     }
 }
