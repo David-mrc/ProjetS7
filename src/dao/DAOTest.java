@@ -35,6 +35,27 @@ public class DAOTest {
             Support supp2 = supportDAO.read(2);
             System.out.println(supp2.toString());
 
+            // SubscriptionCards
+            SubscriptionCard subCard = new SubscriptionCard();
+            DAOFacadeSubscriptionCards cardsFacade = new DAOFacadeSubscriptionCards(conn);
+            subCard.setCardId(2);
+            subCard.setBalance(40.0F);
+            subCard.setUserId(2);
+            if (cardsDAO.create(subCard)){
+                System.out.println("Creation SubCard reussi.");
+            }
+            SubscriptionCard subCard1 = cardsFacade.read(1);
+            cardsFacade.getHistory(subCard1.getCardId());
+            cardsFacade.credit(5.0F,subCard1.getCardId());
+            cardsFacade.canRent(subCard1.getCardId());
+
+            //Support
+
+
+            //CreditCard
+
+
+
             // WRITE
 
             Movie movie3 = new Movie();
@@ -42,6 +63,9 @@ public class DAOTest {
             movie3.setId(3);
             movie3.setDirectorFirstname("Disney");
             movie3.setDirectorFirstname("Disney");
+
+
+
 
         } catch (SQLException e) {
             e.printStackTrace();
