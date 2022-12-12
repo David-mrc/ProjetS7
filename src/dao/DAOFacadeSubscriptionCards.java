@@ -32,7 +32,7 @@ public class DAOFacadeSubscriptionCards {
             ResultSet resultSet = History.executeQuery();
 
             System.out.println("Historique :" );
-            if (resultSet.next()) {
+            while (resultSet.next()) {
 
                 System.out.print("Rental number : " + resultSet.getInt(1) +
                         "; Rental start : " + resultSet.getInt(2) +
@@ -63,20 +63,17 @@ public class DAOFacadeSubscriptionCards {
             e.printStackTrace();
         }
     }
-    public boolean canRent(int rentalId , int cardId){
+    public boolean canRent(int cardId){
         boolean rent = false;
         try {
-            PreparedStatement price = conn.prepareStatement("SELECT PRICE FROM RENTALS WHERE RENTALID = ?");
-            price.setInt(1, rentalId);
-            ResultSet resultSet = price.executeQuery();
 
             PreparedStatement balance = conn.prepareStatement("SELECT BALANCE FROM SUBSCRIPTIONCARDS WHERE CARDID = ?");
             balance.setInt(1, cardId);
-            ResultSet resultSet2 = balance.executeQuery();
+            ResultSet resultSet = balance.executeQuery();
 
 
             if (resultSet.next()) {
-                if( resultSet.getFloat(1) <= resultSet2.getFloat(1)) {
+                if( resultSet.getFloat(1) >= 15) {
                     rent =true;
                 }
             }

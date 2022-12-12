@@ -61,7 +61,7 @@ public class DAOFacadeUser {
         DAORentals daoRentals = new DAORentals(conn);
         Rental rental = new Rental();
         Random random = new Random();
-        rental.setId(random.nextInt(1000000000)); // ON devrait aller voir dans la base...
+        rental.setId(random.nextInt(1000000000)); // todo : voir dans la base...
         rental.setSupportid(support.getSupportID());
         rental.setUserid(user.getUserID());
         if (card.getType() == "Subscription"){
