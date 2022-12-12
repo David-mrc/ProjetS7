@@ -289,4 +289,22 @@ public class DAOFacadeMovie {
         return movies;
     }
 
+    public ArrayList<Movie> getTopWeeklyRentals(int i){
+        ArrayList<Movie> movies = new ArrayList<>();
+        try {
+            PreparedStatement MonthlyRentals = conn.prepareStatement("SELECT MOVIEID FROM MOVIES ORDER BY WEEKRENTALS");
+            ResultSet resultSet = MonthlyRentals.executeQuery();
+
+
+            while (resultSet.next() && i <= 5) {
+                movies.add(this.readMovie(resultSet.getInt(1)));
+                i++;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return movies;
+    }
+
 }
