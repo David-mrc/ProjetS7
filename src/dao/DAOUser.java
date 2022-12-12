@@ -1,7 +1,7 @@
 package dao;
 
 import fc.User;
-import fc.interfaces.DBInterface;
+import dao.DBInterface;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

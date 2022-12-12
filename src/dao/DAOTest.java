@@ -2,9 +2,7 @@ package dao;
 
 import fc.*;
 
-import javax.swing.*;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
@@ -35,7 +33,7 @@ public class DAOTest {
             Support supp2 = supportDAO.read(3);
             System.out.println(supp2.toString());
 
-            DAOInterface daoFacade = new DAOInterface();
+            dao.DBInterface daoFacade = new dao.DBInterface();
             System.out.println("is Available as BluRay movie1 ? " + daoFacade.isAvailableAsBluRay(movie1));
             System.out.println("is Available ? " + daoFacade.isAvailableAsBluRay(movie2));
             System.out.println("is Available ? " + daoFacade.isAvailableAsQRCode(movie1));

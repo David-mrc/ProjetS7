@@ -1,5 +1,6 @@
 package fc.interfaces;
 
+import dao.DBInterface;
 import fc.*;
 
 import java.util.ArrayList;
@@ -60,7 +61,7 @@ public class FCInterface {
     }
 
     public boolean createAccount(int id, String firstName, String lastName, String address) {
-        User newUser = new User(dbi);
+        User newUser = new User();
         newUser.setUserID(id);
         newUser.setFirstname(firstName);
         newUser.setLastName(lastName);
@@ -112,6 +113,10 @@ public class FCInterface {
 
     public ArrayList<Actor> getMovieActors(Movie m){
         return dbi.getMovieActors(m.getId());
+    }
+
+    public User getUser(){
+        return this.user;
     }
 
 }

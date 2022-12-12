@@ -2,7 +2,9 @@ package fc;
 
 import dao.DAOFacadeUser;
 import dao.DAOUser;
-import fc.interfaces.DBInterface;
+import dao.DBInterface;
+import fc.interfaces.CyberVideoInterface;
+import fc.interfaces.FCInterface;
 
 import java.sql.Date;
 import java.sql.SQLException;
@@ -87,7 +89,7 @@ public class User {
         return dao.requestSubscriberCard(this);
     }
 
-    public void requestMovieAsBluRay(Movie m){
-        this.dao.requestMovieAsBluRay(m);
+    public Support requestMovieAsBluRay(Movie m){
+        return this.dao.requestMovieAsBluRay(m);
     }
 }
