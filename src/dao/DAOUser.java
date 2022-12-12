@@ -1,6 +1,5 @@
 package dao;
 
-import fc.Movie;
 import fc.User;
 import fc.interfaces.DBInterface;
 
@@ -26,9 +25,8 @@ public class DAOUser extends DAO<User>{
             preparedStatement.setInt(5,obj.isSubscriber() ? 1 : 0);
             return preparedStatement.executeUpdate() > 0;
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            return false;
         }
-        return false;
     }
 
     @Override
@@ -36,7 +34,7 @@ public class DAOUser extends DAO<User>{
         User user = null;
         //Vérifaction obj de type int ?
         try (PreparedStatement User = conn.prepareStatement(
-                "SELECT FIRSTNAME,LASTNAME,ADDRESS,SUBSCRIBER  FROM USERS WHERE USERID = ?");)
+                "SELECT FIRSTNAME,LASTNAME,ADDRESS,SUBSCRIBER  FROM USERS WHERE USERID = ?"))
         {
             User.setInt(1, (Integer) obj);
             ResultSet UserResult = User.executeQuery();
@@ -72,7 +70,7 @@ public class DAOUser extends DAO<User>{
     @Override
     public boolean delete(User obj) throws SQLException {
         try (PreparedStatement User = conn.prepareStatement(
-                "DELETE FROM USERS WHERE USERID = ?");)
+                "DELETE FROM USERS WHERE USERID = ?"))
         {
             User.setInt(obj.getUserID(),1);
             return User.executeUpdate() > 0;
