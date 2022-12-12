@@ -1,10 +1,12 @@
 package ui;
 
+import fc.Movie;
 import fc.User;
 import fc.interfaces.FCInterface;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class AccountScreen extends ScrollScreen {
     FCInterface fc;
@@ -44,7 +46,17 @@ public class AccountScreen extends ScrollScreen {
         JLabel history = createTitle("Past Rentals - ");
         pane.add(history, BorderLayout.CENTER);
 
+        ArrayList<Movie> historyArray = fc.getHistory();
 
+        JPanel historyPane = new JPanel();
+        for(Movie m : historyArray){
+            JButton movieButton = new JButton(m.getTitle());
+            movieButton.addActionListener(e -> window.openMovieScreen(m));
+            historyPane.add(movieButton);
+        }
+        pane.add(historyPane, BorderLayout.CENTER);
+
+        //TODO: add card status.
     }
 
     private JLabel createTitle(String title) {
