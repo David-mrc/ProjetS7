@@ -1,26 +1,27 @@
 package ui;
 
+import fc.Movie;
 import fc.interfaces.FCInterface;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class MainScreen extends ScrollScreen {
 
     MainScreen(Window window, FCInterface fc) {
         super(new BorderLayout());
 
-        JLabel weeklyTopRentalLabel = createTitle("Top Movies of the Week");
-        pane.add(weeklyTopRentalLabel, BorderLayout.NORTH);
+        JLabel monthlyTopRentalLabel = Screen.createTitle("Top Movies of the Month");
+        pane.add(monthlyTopRentalLabel, BorderLayout.NORTH);
 
-        fc.getWeeklyTopRentals(10);
-        JButton movie = new JButton();
-    }
-
-    private JLabel createTitle(String title) {
-        JLabel label = new JLabel(title);
-        label.setForeground(Color.ORANGE);
-        label.setFont(new Font("Arial", Font.PLAIN, 30));
-        return label;
+        JPanel monthlyTopRentalsPane = new JPanel();
+        ArrayList<Movie> monthlyTopRentals = fc.getMonthlyTopRentals(10);
+        for (Movie movie: monthlyTopRentals) {
+            JButton movieButton = new JButton(movie.getTitle());
+            movieButton.addActionListener(e -> window.openMovieScreen(movie));
+            monthlyTopRentalsPane.add(movieButton);
+        }
+        pane.add(monthlyTopRentalsPane, BorderLayout.CENTER);
     }
 }

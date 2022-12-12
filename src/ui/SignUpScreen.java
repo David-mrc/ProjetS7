@@ -17,9 +17,7 @@ public class SignUpScreen extends Screen {
 
         JPanel northPane = new JPanel(new FlowLayout(FlowLayout.CENTER));
         northPane.setBackground(BACKGROUND);
-        JLabel title = new JLabel("Sign Up");
-        title.setFont(new Font("Arial", Font.PLAIN, 30));
-        title.setForeground(Color.ORANGE);
+        JLabel title = createTitle("Sign Up");
         northPane.add(title);
         pane.add(northPane, BorderLayout.NORTH);
 
