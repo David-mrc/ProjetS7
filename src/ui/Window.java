@@ -23,10 +23,10 @@ public class Window extends JFrame {
         topBar = new TopBar(this);
         add(topBar, BorderLayout.NORTH);
 
-        AdBanner banner1 = new AdBanner(new File("resources/empty_ad.jpg"));
+        AdBanner banner1 = new AdBanner(new File("resources/empty_ad.png"));
         add(banner1, BorderLayout.WEST);
 
-        AdBanner banner2 = new AdBanner(new File("resources/empty_ad.jpg"));
+        AdBanner banner2 = new AdBanner(new File("resources/empty_ad.png"));
         add(banner2, BorderLayout.EAST);
 
         cardLayout = new CardLayout();
