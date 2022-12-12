@@ -20,7 +20,6 @@ public class DAOTest {
             conn = DriverManager.getConnection(url,user,passwd);
             DAO<Movie> movieDAO = new DAOMovie(conn);
             DAO<Support> supportDAO = new DAOSupport(conn);
-            DAO<People> peopledaoDAO = new DAOPeople(conn);
             DAO<SubscriptionCard> cardsDAO = new DAOCards(conn);
             DAO<User> userDAO = new DAOUser(conn);
             DAO<CreditCard> creditCardDAO = new DAOCreditCard(conn);
