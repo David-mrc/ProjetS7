@@ -18,7 +18,6 @@ public class DAOCards extends DAO<SubscriptionCard> {
                 "INSERT INTO CARDS VALUES ( cardId = ? , balance = ? , ageRestriction = ? , userId = ?)")) {
             preparedStatement.setInt(1, obj.getCardId());
             preparedStatement.setFloat(2, obj.getBalance());
-            preparedStatement.setInt(3, obj.getAgeRestriction());
             preparedStatement.setInt(4, obj.getUserId());
 
             return preparedStatement.executeUpdate() > 0;
@@ -41,7 +40,6 @@ public class DAOCards extends DAO<SubscriptionCard> {
             cards.setCardId( (Integer) cardID);
             if (resultSet.next()) {
                 cards.setBalance(resultSet.getFloat(1));
-                cards.setAgeRestriction(resultSet.getInt(2));
                 cards.setUserId(resultSet.getInt(3));
             }
 
