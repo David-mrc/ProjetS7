@@ -4,6 +4,8 @@ public class SubscriptionCard extends Cards{
     private int CardId;
     private float balance;
     private int getUserId;
+
+    public String getType(){return "Subscription";}
     @Override
     public String toString() {
         return "CardId : " + CardId + " ; balance : " + balance + " ; getUserId : " + getUserId;
@@ -19,6 +21,9 @@ public class SubscriptionCard extends Cards{
 
     public int getCardId() {
         return CardId;
+    }
+    public int getID(){
+        return getCardId();
     }
 
     public void setCardId(int cardId) {

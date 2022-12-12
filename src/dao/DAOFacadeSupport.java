@@ -14,7 +14,7 @@ public class DAOFacadeSupport {
         this.conn = conn;
     }
 
-    public Support readSupport (Object id){
+    public Support readSupport (Support id){
         DAOSupport daoSupport =  new DAOSupport(conn);
         Support s = null;
         try {
