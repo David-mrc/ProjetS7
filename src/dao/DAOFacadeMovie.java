@@ -277,10 +277,8 @@ public class DAOFacadeMovie {
             PreparedStatement MonthlyRentals = conn.prepareStatement("SELECT MOVIEID FROM MOVIES ORDER BY MONTHRENTALS");
             ResultSet resultSet = MonthlyRentals.executeQuery();
 
-
-            while (resultSet.next() && i <= 5) {
+            for (int j = 0; resultSet.next() && j <= i; j++) {
                 movies.add(this.readMovie(resultSet.getInt(1)));
-                i++;
             }
 
         } catch (SQLException e) {
@@ -296,9 +294,8 @@ public class DAOFacadeMovie {
             ResultSet resultSet = MonthlyRentals.executeQuery();
 
 
-            while (resultSet.next() && i <= 5) {
+            for (int j = 0; resultSet.next() && j <= i; j++) {
                 movies.add(this.readMovie(resultSet.getInt(1)));
-                i++;
             }
 
         } catch (SQLException e) {
