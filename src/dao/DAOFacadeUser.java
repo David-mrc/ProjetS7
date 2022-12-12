@@ -37,16 +37,16 @@ public class DAOFacadeUser {
 
             ResultSet UserResult = User.executeQuery();
 
-            user = new User(new DBInterface());
-
             if (UserResult.next()) {
+                user = new User(new DBInterface());
+
                 user.setUserID(UserResult.getInt(1));
                 user.setFirstname(UserResult.getString(2));
                 user.setLastName(UserResult.getString(3));
                 user.setAddress(UserResult.getString(4));
                 user.setSubscriber(UserResult.getInt(5) == 1);
             }
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return user;
@@ -65,7 +65,7 @@ public class DAOFacadeUser {
         rental.setId(random.nextInt(1000000000)); // todo : voir dans la base...
         rental.setSupportid(support.getSupportID());
         rental.setUserid(user.getUserID());
-        if (card.getType() == "Subscription"){
+        if (card.getType().equals("Subscription")) {
             rental.setPrice(3);
             rental.setCardID(card.getID());
         } else {
