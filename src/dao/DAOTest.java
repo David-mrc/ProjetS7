@@ -71,8 +71,6 @@ public class DAOTest {
             movie3.setDirectorFirstname("Disney");
 
 
-
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
