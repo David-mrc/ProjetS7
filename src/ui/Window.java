@@ -12,8 +12,8 @@ public class Window extends JFrame {
     private final TopBar topBar;
     private final JPanel mainPane;
     private final CardLayout cardLayout;
-    private Screen defaultScreen, loginScreen, signUpScreen;
-    private ScrollScreen mainScreen;
+    private JScrollPane scrollPane;
+    private Screen defaultScreen, loginScreen, signUpScreen, mainScreen;
     private MovieScreen movieScreen;
     private String currentScreen;
     private final static String DEFAULT_SCREEN = "Default", LOGIN_SCREEN = "Login", SIGNUP_SCREEN = "Sign Up";
@@ -87,9 +87,10 @@ public class Window extends JFrame {
     }
 
     void openMainScreen() {
-        if (mainScreen == null) {
+        if (mainScreen == null || scrollPane == null) {
             mainScreen = new MainScreen(this, fc);
-            mainPane.add(mainScreen, MAIN_SCREEN);
+            scrollPane = new JScrollPane(mainScreen);
+            mainPane.add(scrollPane, MAIN_SCREEN);
         }
         cardLayout.show(mainPane, MAIN_SCREEN);
         topBar.hidePrevious();
