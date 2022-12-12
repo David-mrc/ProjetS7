@@ -1,5 +1,6 @@
+import dao.DBInterface;
 import fc.interfaces.CyberVideoInterface;
-import fc.interfaces.DBInterface;
+import dao.DBInterface;
 import fc.interfaces.FCInterface;
 import ui.Window;
 

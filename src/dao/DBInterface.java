@@ -6,8 +6,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Objects;
 
-public class DAOInterface {
+public class DBInterface {
 
     String url = "jdbc:oracle:thin:@im2ag-oracle.e.ujf-grenoble.fr:1521:im2ag";
     String user = "bultincl";
@@ -20,7 +21,7 @@ public class DAOInterface {
     DAOFacadeSubscriptionCards daoFacadeSubscriptionCards;
     DAOFacadeSupport daoFacadeSupport;
 
-    public DAOInterface() {
+    public DBInterface() {
         try {
             conn = DriverManager.getConnection(url, user, passwd);
             daoFacadeMovie = new DAOFacadeMovie(conn);
@@ -28,6 +29,8 @@ public class DAOInterface {
             daoFacadeSupport = new DAOFacadeSupport(conn);
             daoFacadeSubscriptionCards = new DAOFacadeSubscriptionCards(conn);
             daoFacadeUser = new DAOFacadeUser(conn);
+
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -50,20 +53,24 @@ public class DAOInterface {
         return false;
     }
 
-    public void rentMovie(User user, Support support, Cards card){
+    public boolean rentMovie(User user, Support support, Cards card){
         try {
             daoFacadeUser.rentMovie(user,support,card);
+            return true;
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return false;
     }
 
-    public void requestSubscriberCard(User user){
+    public boolean requestSubscriberCard(User user){
         try {
             daoFacadeUser.requestSubscriberCard(user);
+            return true;
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return false;
     }
 
     public Movie readMovie (int id){
@@ -100,18 +107,6 @@ public class DAOInterface {
     }
     public boolean isAvailableAsQRCode(Movie movie) {
         return daoFacadeMovie.isAvailableAsQRCode(movie);
-    }
-
-    public ArrayList<Movie> getMovieList(){
-        return  daoFacadeMovie.getMovieList();
-    }
-
-    public ArrayList<Movie> getMovieListBR(){
-        return  daoFacadeMovie.getMovieListBR();
-    }
-
-    public ArrayList<Movie> getMovieListQR(){
-        return  daoFacadeMovie.getMovieListQR();
     }
 
     public ArrayList<Movie> getHistory(int userID){
@@ -155,5 +150,103 @@ public class DAOInterface {
         return daoFacadeSubscriptionCards.canRent(subscriptionCard.getCardId());
     }
 
+    public ArrayList<Movie> getMovieList(){
+        return daoFacadeMovie.getMovieList();
+    }
 
+    public ArrayList<Movie> getMovieListQR(){
+        return daoFacadeMovie.getMovieListQR();
+    }
+
+    public ArrayList<Movie> getMovieListBR(){
+        return daoFacadeMovie.getMovieListBR();
+    }
+
+    public ArrayList<Movie> getMovieListGrossingMonthly(int i){
+        return daoFacadeMovie.getTopMonthlyRentals(i);
+    }
+
+    public ArrayList<Movie> getMovieListGrossingWeekly(int i){
+        return daoFacadeMovie.getTopWeeklyRentals(i);
+    }
+
+    public User logUserIn(int userID){
+        return daoFacadeUser.login(userID);
+    }
+
+    public boolean createAccount(User user){
+        try {
+            return daoFacadeUser.create(user);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public ArrayList<Movie> getHistory(User user){
+        return daoFacadeMovie.getHistory(user.getUserID());
+    }
+
+    public boolean rentMovie2(User user,Support support, Cards cards){
+        try {
+            if(cards.getType() == "Subscription"){
+                if(!daoFacadeSubscriptionCards.canRent(cards.getID())){
+                    return false;
+                }
+            } else {
+                if(!daoFacadeCreditCard.canRent()){
+                    return false;
+                }
+            }
+            daoFacadeUser.rentMovie(user, support, cards);
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+        return true;
+    }
+    public Support getMovieBR(int movieID){
+        return daoFacadeSupport.getIfAvailable(movieID);
+    }
+
+    public Support getMovieQR(int movieID){
+        return daoFacadeSupport.getQR(movieID);
+    }
+
+    public Cards getUserCard(User user){
+        Cards c;
+        if(user.isSubscriber()){
+            c = daoFacadeSubscriptionCards.getSubscriptionCard(user.getUserID());
+        } else {
+            c = daoFacadeCreditCard.getCreditCard(user.getUserID());
+        }
+
+        return c;
+    }
+
+    public float getBalance(User user){
+        Cards c = getUserCard(user);
+        if(Objects.equals(c.getType(), "Subscription")){
+            return ((SubscriptionCard) c).getBalance();
+        }
+        return 0.0F;
+    }
+
+    public void topUpCard(User user, float amount){
+        Cards c = getUserCard(user);
+        if(Objects.equals(c.getType(), "Subscription")){
+            float oldBalance = ((SubscriptionCard) c).getBalance();
+            ((SubscriptionCard) c).setBalance(oldBalance + amount);
+            //db call
+            daoFacadeSubscriptionCards.credit(amount, ((SubscriptionCard) c).getID());
+        }
+    }
+
+    public ArrayList<Actor> getMovieActors(int movieID){
+        return daoFacadeMovie.getActorFromMovies(movieID);
+    }
+
+
+    public Support requestMovieAsBluRay(Movie m) {
+        return daoFacadeMovie.getAvailableBluRay(m);
+    }
 }
