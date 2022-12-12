@@ -57,7 +57,8 @@ public class DAOFacadeSubscriptionCards {
             if(resultSet2.next()) {
                 PreparedStatement price = conn.prepareStatement("UPDATE SUBSCRIPTIONCARDS SET BALANCE = ? WHERE CARDID = ?");
                 price.setInt(2, cardId);
-                price.setFloat(1, resultSet2.getFloat(1) + credit);
+                price.setFloat(1, (resultSet2.getFloat(1) + credit));
+                price.executeUpdate();
             }
 
 

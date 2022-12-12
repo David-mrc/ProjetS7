@@ -198,7 +198,7 @@ public class DAOFacadeMovie {
 
         try {
             PreparedStatement MovieStatement = conn.prepareStatement("SELECT * FROM Movies_base WHERE movieID IN " +
-                    "(SELECT * FROM SUPPORTS WHERE supportType = 'QRCode')");
+                    "(SELECT movieID FROM SUPPORTS WHERE supportType = 'QRCode')");
             ResultSet MovieResult = MovieStatement.executeQuery();
 
             while(MovieResult.next()) {
@@ -224,7 +224,7 @@ public class DAOFacadeMovie {
 
         try {
             PreparedStatement MovieStatement = conn.prepareStatement("SELECT * FROM Movies_base WHERE movieID IN " +
-                    "(SELECT * FROM SUPPORTS WHERE supportType = 'BluRay' and available = 1)");
+                    "(SELECT movieID FROM SUPPORTS WHERE supportType = 'BluRay' and available = 1)");
             ResultSet MovieResult = MovieStatement.executeQuery();
 
             while(MovieResult.next()) {
@@ -249,8 +249,7 @@ public class DAOFacadeMovie {
         ArrayList<Movie> movies = new ArrayList<>();
 
         try {
-            PreparedStatement MovieStatement = conn.prepareStatement("SELECT * FROM Movies_base NATURAL JOIN RENTALS WHERE movieID=userID =? " +
-                    "(SELECT * FROM RENTALS WHERE userID = ?) ");
+            PreparedStatement MovieStatement = conn.prepareStatement("SELECT * FROM Movies_base WHERE movieID IN (SELECT movieID FROM RENTALS WHERE userID = ?) ");
             MovieStatement.setInt(1, userID);
             ResultSet MovieResult = MovieStatement.executeQuery();
 
@@ -277,10 +276,8 @@ public class DAOFacadeMovie {
             PreparedStatement MonthlyRentals = conn.prepareStatement("SELECT MOVIEID FROM MOVIES ORDER BY MONTHRENTALS");
             ResultSet resultSet = MonthlyRentals.executeQuery();
 
-
-            while (resultSet.next() && i <= 5) {
+            for (int j = 0; resultSet.next() && j <= i; j++) {
                 movies.add(this.readMovie(resultSet.getInt(1)));
-                i++;
             }
 
         } catch (SQLException e) {
@@ -296,9 +293,8 @@ public class DAOFacadeMovie {
             ResultSet resultSet = MonthlyRentals.executeQuery();
 
 
-            while (resultSet.next() && i <= 5) {
+            for (int j = 0; resultSet.next() && j <= i; j++) {
                 movies.add(this.readMovie(resultSet.getInt(1)));
-                i++;
             }
 
         } catch (SQLException e) {

@@ -12,12 +12,12 @@ public class Window extends JFrame {
     private final TopBar topBar;
     private final JPanel mainPane;
     private final CardLayout cardLayout;
-    private Screen defaultScreen, loginScreen, signUpScreen;
-    private ScrollScreen mainScreen;
+    private JScrollPane scrollPane;
+    private Screen defaultScreen, loginScreen, signUpScreen, mainScreen, accountScreen;
     private MovieScreen movieScreen;
     private String currentScreen;
     private final static String DEFAULT_SCREEN = "Default", LOGIN_SCREEN = "Login", SIGNUP_SCREEN = "Sign Up";
-    private final static String MAIN_SCREEN = "Main", MOVIE_SCREEN = "Movie";
+    private final static String MAIN_SCREEN = "Main", MOVIE_SCREEN = "Movie", ACCOUNT_SCREEN = "Account";
 
     Window(FCInterface fc) {
         try {
@@ -87,9 +87,13 @@ public class Window extends JFrame {
     }
 
     void openMainScreen() {
-        if (mainScreen == null) {
+        if (mainScreen == null || scrollPane == null) {
             mainScreen = new MainScreen(this, fc);
-            mainPane.add(mainScreen, MAIN_SCREEN);
+            scrollPane = new JScrollPane(mainScreen,
+                    JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+                    JScrollPane.HORIZONTAL_SCROLLBAR_NEVER
+            );
+            mainPane.add(scrollPane, MAIN_SCREEN);
         }
         cardLayout.show(mainPane, MAIN_SCREEN);
         topBar.hidePrevious();
@@ -111,6 +115,17 @@ public class Window extends JFrame {
         currentScreen = MOVIE_SCREEN;
     }
 
+    void openAccountScreen() {
+        if (accountScreen == null) {
+            accountScreen = new AccountScreen(this, fc);
+            mainPane.add(accountScreen, ACCOUNT_SCREEN);
+        }
+        cardLayout.show(mainPane, ACCOUNT_SCREEN);
+
+
+        currentScreen = ACCOUNT_SCREEN;
+    }
+
     void previous() {
         switch (currentScreen) {
             case LOGIN_SCREEN:
@@ -118,7 +133,9 @@ public class Window extends JFrame {
                 openDefaultScreen();
                 break;
             case MOVIE_SCREEN:
+            case ACCOUNT_SCREEN:
                 openMainScreen();
+                break;
             default:
                 break;
         }
