@@ -1,16 +1,13 @@
 package fc.interfaces;
-import IHM.App;
 import fc.*;
 
 import java.util.ArrayList;
 
 public class FCInterface {
-    App a;
     CyberVideoInterface cvi;
     DBInterface dbi;
 
-    public FCInterface(App a, CyberVideoInterface cvi, DBInterface dbi){
-        this.a = a;
+    public FCInterface(CyberVideoInterface cvi, DBInterface dbi){
         this.cvi = cvi;
         this.dbi = dbi;
     }
