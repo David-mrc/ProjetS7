@@ -1,5 +1,6 @@
 package dao;
 
+import fc.CreditCard;
 import fc.SubscriptionCard;
 
 import java.sql.Connection;
@@ -82,6 +83,29 @@ public class DAOFacadeSubscriptionCards {
             e.printStackTrace();
         }
         return rent;
+    }
+
+    public SubscriptionCard getSubscriptionCard(int userID){
+        SubscriptionCard sc = new SubscriptionCard();
+        try {
+
+            PreparedStatement CCStatement = conn.prepareStatement("SELECT * FROM SUBSCRIPTIONCARDS WHERE USERID = ?");
+            CCStatement.setInt(1, userID);
+            ResultSet resultSet = CCStatement.executeQuery();
+
+
+            if (resultSet.next()) {
+
+                    sc.setCardId(resultSet.getInt(1));
+                    sc.setBalance(resultSet.getInt(2));
+                    sc.setUserId(resultSet.getInt(3));
+
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return sc;
     }
 }
 

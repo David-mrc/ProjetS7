@@ -2,6 +2,7 @@ package dao;
 
 import fc.Movie;
 import fc.User;
+import fc.interfaces.DBInterface;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -40,7 +41,7 @@ public class DAOUser extends DAO<User>{
             User.setInt(1, (Integer) obj);
             ResultSet UserResult = User.executeQuery();
 
-            user = new User();
+            user = new User(new DBInterface());
             user.setUserID((Integer) obj );
             if (UserResult.next()) {
                 user.setFirstname(UserResult.getString(1));

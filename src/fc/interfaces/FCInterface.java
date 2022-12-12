@@ -35,15 +35,11 @@ public class FCInterface {
     public void  getMonthlyTopRentals(Integer i){
 
     }
-    public void  rentAsBluRay(Movie m){
 
-    }
-    public void  rentAsQRCode(Movie m){
-
-    }
     public void  requestMovieAsBluRay(Movie m){
-
+        this.user.requestMovieAsBluRay(m);
     }
+
     public void  topUpCard(){
 
     }
@@ -81,6 +77,30 @@ public class FCInterface {
             throw new RuntimeException("No user logged in error");
         }
         return this.user.requestSubscriberCard();
+    }
+
+    public boolean rentMovieQR(int movieID){
+        if(this.user == null){
+            throw new RuntimeException("No user logged in error");
+        }
+        Support s = dbi.getMovieQR(movieID);
+        Cards c = dbi.getUserCard(this.user);
+
+        if(c == null || s == null){return false;}
+        return this.user.rentMovieQR(s, c);
+
+    }
+
+    public boolean rentMovieBR(int movieID){
+        if(this.user == null){
+            throw new RuntimeException("No user logged in error");
+        }
+        Support s = dbi.getMovieBR(movieID);
+        Cards c = dbi.getUserCard(this.user);
+
+        if(c == null || s == null){return false;}
+        return this.user.rentMovieBR(s, c);
+
     }
 
 }
