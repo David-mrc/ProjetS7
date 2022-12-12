@@ -39,7 +39,7 @@ public class DAOFacadeMovie {
             ResultSet MovieResult = actorsPlaying.executeQuery();
 
 
-            if (MovieResult.next()) {
+            while(MovieResult.next()) {
                 Actor actor = new Actor();
                 actor.setFirstName(MovieResult.getString(1));
                 actor.setLastName(MovieResult.getString(2));

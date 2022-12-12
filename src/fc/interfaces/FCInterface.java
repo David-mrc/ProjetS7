@@ -30,8 +30,8 @@ public class FCInterface {
         //TODO: implement method
     }
 
-    public void getMonthlyTopRentals(Integer i) {
-        //TODO: implement method
+    public ArrayList<Movie> getMonthlyTopRentals(Integer i) {
+        return dbi.getMovieListGrossing();
     }
 
     public void requestMovieAsBluRay(Movie m) {
@@ -108,6 +108,10 @@ public class FCInterface {
         }
         return this.user.rentMovieBR(s, c);
 
+    }
+
+    public ArrayList<Actor> getMovieActors(Movie m){
+        return dbi.getMovieActors(m.getId());
     }
 
 }

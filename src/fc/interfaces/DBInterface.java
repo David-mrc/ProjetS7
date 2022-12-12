@@ -51,6 +51,10 @@ public class DBInterface {
             return facadeMovie.getMovieListBR();
         }
 
+        public ArrayList<Movie> getMovieListGrossing(){
+            return facadeSupport.getMonthlyRentals();
+        }
+
         public User logUserIn(int userID){
             return facadeUser.login(userID);
         }
@@ -129,6 +133,10 @@ public class DBInterface {
                 //db call
                 facadeSC.credit(amount, ((SubscriptionCard) c).getID());
             }
+        }
+
+        public ArrayList<Actor> getMovieActors(int movieID){
+            return facadeMovie.getActorFromMovies(movieID);
         }
 
 }
