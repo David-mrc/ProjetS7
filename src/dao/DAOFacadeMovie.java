@@ -182,6 +182,7 @@ public class DAOFacadeMovie {
                 movie.setTitle(MovieResult.getString(2));
                 movie.setDirectorLastname(MovieResult.getString(3));
                 movie.setDirectorFirstname(MovieResult.getString(4));
+                movies.add(movie);
             }
 
         } catch (SQLException e) {
@@ -207,6 +208,7 @@ public class DAOFacadeMovie {
                 movie.setTitle(MovieResult.getString(2));
                 movie.setDirectorLastname(MovieResult.getString(3));
                 movie.setDirectorFirstname(MovieResult.getString(4));
+                movies.add(movie);
             }
 
         } catch (SQLException e) {
@@ -232,6 +234,7 @@ public class DAOFacadeMovie {
                 movie.setTitle(MovieResult.getString(2));
                 movie.setDirectorLastname(MovieResult.getString(3));
                 movie.setDirectorFirstname(MovieResult.getString(4));
+                movies.add(movie);
             }
 
         } catch (SQLException e) {
@@ -258,6 +261,7 @@ public class DAOFacadeMovie {
                 movie.setTitle(MovieResult.getString(2));
                 movie.setDirectorLastname(MovieResult.getString(3));
                 movie.setDirectorFirstname(MovieResult.getString(4));
+                movies.add(movie);
             }
 
         } catch (SQLException e) {
