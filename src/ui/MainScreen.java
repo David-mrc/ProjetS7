@@ -7,13 +7,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class MainScreen extends ScrollScreen {
+public class MainScreen extends Screen {
 
     MainScreen(Window window, FCInterface fc) {
         super(new BorderLayout());
 
         JLabel monthlyTopRentalLabel = Screen.createTitle("Top Movies of the Month");
-        pane.add(monthlyTopRentalLabel, BorderLayout.NORTH);
+        add(monthlyTopRentalLabel, BorderLayout.NORTH);
 
         JPanel monthlyTopRentalsPane = new JPanel();
         ArrayList<Movie> monthlyTopRentals = fc.getMonthlyTopRentals(10);
@@ -22,6 +22,6 @@ public class MainScreen extends ScrollScreen {
             movieButton.addActionListener(e -> window.openMovieScreen(movie));
             monthlyTopRentalsPane.add(movieButton);
         }
-        pane.add(monthlyTopRentalsPane, BorderLayout.CENTER);
+        add(monthlyTopRentalsPane, BorderLayout.CENTER);
     }
 }
