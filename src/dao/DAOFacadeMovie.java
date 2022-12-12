@@ -198,7 +198,7 @@ public class DAOFacadeMovie {
 
         try {
             PreparedStatement MovieStatement = conn.prepareStatement("SELECT * FROM Movies_base WHERE movieID IN " +
-                    "(SELECT * FROM SUPPORTS WHERE supportType = 'QRCode')");
+                    "(SELECT movieID FROM SUPPORTS WHERE supportType = 'QRCode')");
             ResultSet MovieResult = MovieStatement.executeQuery();
 
             while(MovieResult.next()) {
@@ -224,7 +224,7 @@ public class DAOFacadeMovie {
 
         try {
             PreparedStatement MovieStatement = conn.prepareStatement("SELECT * FROM Movies_base WHERE movieID IN " +
-                    "(SELECT * FROM SUPPORTS WHERE supportType = 'BluRay' and available = 1)");
+                    "(SELECT movieID FROM SUPPORTS WHERE supportType = 'BluRay' and available = 1)");
             ResultSet MovieResult = MovieStatement.executeQuery();
 
             while(MovieResult.next()) {
@@ -249,8 +249,7 @@ public class DAOFacadeMovie {
         ArrayList<Movie> movies = new ArrayList<>();
 
         try {
-            PreparedStatement MovieStatement = conn.prepareStatement("SELECT * FROM Movies_base WHERE movieID IN " +
-                    "(SELECT * FROM RENTALS WHERE userID = ?) ");
+            PreparedStatement MovieStatement = conn.prepareStatement("SELECT * FROM Movies_base WHERE movieID IN (SELECT movieID FROM RENTALS WHERE userID = ?) ");
             MovieStatement.setInt(1, userID);
             ResultSet MovieResult = MovieStatement.executeQuery();
 
