@@ -74,12 +74,20 @@ public class User {
         this.subscriber = subscriber;
     }
 
-    public boolean rentMovie(Support support,Cards cards){
+    public boolean rentMovieQR(Support support,Cards cards){
             return dao.rentMovie(this,support,cards);
+    }
+
+    public boolean rentMovieBR(Support support,Cards cards){
+        return dao.rentMovie(this,support,cards);
     }
 
     public boolean requestSubscriberCard(){
         System.out.println("Asking for a new subscription Card");
         return dao.requestSubscriberCard(this);
+    }
+
+    public void requestMovieAsBluRay(Movie m){
+        this.dao.requestMovieAsBluRay(m);
     }
 }

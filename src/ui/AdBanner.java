@@ -21,7 +21,7 @@ public class AdBanner extends JPanel {
             add(imageLabel, BorderLayout.CENTER);
         } catch (Exception e) {
             e.printStackTrace();
-            System.exit(1);
+            System.exit(2);
         }
     }
 }

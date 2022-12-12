@@ -21,10 +21,10 @@ class TopBar extends JPanel {
         previousButton.addActionListener(e -> window.previous());
         leftPane.add(previousButton);
 
-        padding = Box.createRigidArea(new Dimension(75, 0));
+        padding = Box.createRigidArea(new Dimension(46, 0));
         leftPane.add(padding);
 
-        leftPane.add(Box.createRigidArea(new Dimension(65, 0)));
+        leftPane.add(Box.createRigidArea(new Dimension(90, 0)));
 
         JLabel AL2000Label = new JLabel("AL2000");
         AL2000Label.setForeground(Color.ORANGE);

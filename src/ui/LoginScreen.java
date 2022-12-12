@@ -1,41 +1,69 @@
 package ui;
 
+import fc.interfaces.FCInterface;
+
 import javax.swing.*;
 import java.awt.*;
 
-public class LoginScreen extends JPanel {
+public class LoginScreen extends Screen {
     JTextField idField;
+    JLabel feedBackLabel;
 
-    LoginScreen(Window window) {
+    LoginScreen(Window window, FCInterface fc) {
         super(new GridBagLayout());
-        setBackground(new Color(20, 20, 20));
 
         JPanel pane = new JPanel(new BorderLayout());
-        pane.setBackground(new Color(20, 20, 20));
+        pane.setBackground(BACKGROUND);
 
         JPanel northPane = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        northPane.setBackground(new Color(20, 20, 20));
+        northPane.setBackground(BACKGROUND);
         JLabel title = new JLabel("Sign In");
         title.setFont(new Font("Arial", Font.PLAIN, 30));
         title.setForeground(Color.ORANGE);
         northPane.add(title);
         pane.add(northPane, BorderLayout.NORTH);
 
-        JLabel idLabel = new JLabel("Username : ");
+        JPanel idPane = new JPanel(new BorderLayout());
+        idPane.setBackground(BACKGROUND);
+        JLabel idLabel = new JLabel("UserID : ");
         idLabel.setForeground(Color.WHITE);
-        pane.add(idLabel, BorderLayout.WEST);
-
+        idPane.add(idLabel, BorderLayout.CENTER);
         idField = new JTextField();
         idField.setPreferredSize(new Dimension(200, 30));
-        pane.add(idField, BorderLayout.CENTER);
+        idPane.add(idField, BorderLayout.EAST);
 
+        JPanel signInPane = new JPanel(new BorderLayout());
+        signInPane.setBackground(BACKGROUND);
         JButton signInButton = new JButton("Sign In");
-        pane.add(signInButton, BorderLayout.EAST);
+        signInButton.addActionListener(e -> {
+            int id = -1;
 
+            try {
+                id = Integer.parseInt(idField.getText());
+            } catch (Exception ex) {
+                feedBackLabel.setText("Can't log in");
+            }
+
+            if (fc.login(id)) {
+                window.openMainScreen();
+            } else {
+                feedBackLabel.setText("Can't log in");
+            }
+        });
+        signInPane.add(signInButton, BorderLayout.CENTER);
+
+        feedBackLabel = new JLabel("");
+        feedBackLabel.setForeground(Color.RED);
+
+        signInPane.add(feedBackLabel, BorderLayout.SOUTH);
+        idPane.add(signInPane, BorderLayout.SOUTH);
+        pane.add(idPane, BorderLayout.EAST);
         add(pane);
     }
 
+    @Override
     void clear() {
         idField.setText("");
+        feedBackLabel.setText("");
     }
 }

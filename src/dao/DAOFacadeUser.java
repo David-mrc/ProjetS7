@@ -2,6 +2,7 @@ package dao;
 
 
 import fc.*;
+import fc.interfaces.DBInterface;
 
 import java.sql.*;
 import java.util.Random;
@@ -36,7 +37,7 @@ public class DAOFacadeUser {
 
             ResultSet UserResult = User.executeQuery();
 
-            user = new User();
+            user = new User(new DBInterface());
 
             if (UserResult.next()) {
                 user.setUserID(UserResult.getInt(1));

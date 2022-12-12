@@ -43,6 +43,52 @@ public class DAOFacadeSupport {
         return available;
     }
 
+    public Support getIfAvailable(int movieID){ //for blurays
+        Support support = new BluRay();
+        try {
+            PreparedStatement BRStatement = conn.prepareStatement("SELECT * FROM SUPPORTS_BASE WHERE MOVIEID = ? AND available = 1 AND supportType = 'BluRay' ");
+            BRStatement.setInt(1, movieID);
+            ResultSet resultSet = BRStatement.executeQuery();
+
+
+            if (resultSet.next()) {
+                support.setSupportID(resultSet.getInt(1));
+                support.setSupportType(resultSet.getString(2));
+                support.setDamagedDisk(resultSet.getBoolean(3));
+                support.setLostDisk(resultSet.getBoolean(4));
+                support.setStreamAddress(resultSet.getString(5));
+                support.setMovieId(resultSet.getInt(6));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return support;
+    }
+
+    public Support getQR(int movieID){ //for QRs
+        Support support = new QRCode();
+        try {
+            PreparedStatement BRStatement = conn.prepareStatement("SELECT * FROM SUPPORTS_BASE WHERE MOVIEID = ? AND available = 1 AND supportType = 'QRCode' ");
+            BRStatement.setInt(1, movieID);
+            ResultSet resultSet = BRStatement.executeQuery();
+
+
+            if (resultSet.next()) {
+                support.setSupportID(resultSet.getInt(1));
+                support.setSupportType(resultSet.getString(2));
+                support.setDamagedDisk(resultSet.getBoolean(3));
+                support.setLostDisk(resultSet.getBoolean(4));
+                support.setStreamAddress(resultSet.getString(5));
+                support.setMovieId(resultSet.getInt(6));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return support;
+    }
+
     public int getWeeklyRentals(int supportId ){
         int weeklyRentals = 0;
         try {
