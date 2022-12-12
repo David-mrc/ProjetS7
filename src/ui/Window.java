@@ -15,7 +15,7 @@ public class Window extends JFrame {
     private JScrollPane scrollPane;
     private Screen defaultScreen, loginScreen, signUpScreen, mainScreen, accountScreen;
     private MovieScreen movieScreen;
-    private String currentScreen;
+    private String currentScreen, lastScreen;
     private final static String DEFAULT_SCREEN = "Default", LOGIN_SCREEN = "Login", SIGNUP_SCREEN = "Sign Up";
     private final static String MAIN_SCREEN = "Main", MOVIE_SCREEN = "Movie", ACCOUNT_SCREEN = "Account";
 
@@ -112,6 +112,7 @@ public class Window extends JFrame {
         topBar.showMenus();
         movieScreen.clear();
         movieScreen.setMovie(movie);
+        lastScreen = currentScreen;
         currentScreen = MOVIE_SCREEN;
     }
 
@@ -121,8 +122,9 @@ public class Window extends JFrame {
             mainPane.add(accountScreen, ACCOUNT_SCREEN);
         }
         cardLayout.show(mainPane, ACCOUNT_SCREEN);
-
-
+        topBar.showPrevious();
+        topBar.showMenus();
+        accountScreen.clear();
         currentScreen = ACCOUNT_SCREEN;
     }
 
@@ -132,9 +134,15 @@ public class Window extends JFrame {
             case SIGNUP_SCREEN:
                 openDefaultScreen();
                 break;
-            case MOVIE_SCREEN:
             case ACCOUNT_SCREEN:
                 openMainScreen();
+                break;
+            case MOVIE_SCREEN:
+                if (lastScreen.equals(MAIN_SCREEN)) {
+                    openMainScreen();
+                } else if (lastScreen.equals(ACCOUNT_SCREEN)) {
+                    openAccountScreen();
+                }
                 break;
             default:
                 break;
