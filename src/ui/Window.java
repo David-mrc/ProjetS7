@@ -121,8 +121,8 @@ public class Window extends JFrame {
             mainPane.add(accountScreen, ACCOUNT_SCREEN);
         }
         cardLayout.show(mainPane, ACCOUNT_SCREEN);
-        topBar.hidePrevious();
-        topBar.hideMenus();
+
+
         currentScreen = ACCOUNT_SCREEN;
     }
 
