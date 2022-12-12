@@ -26,12 +26,12 @@ public class FCInterface {
         return dbi.getMovieListQR();
     }
 
-    public ArrayList<Movie> getWeeklyTopRentals(Integer i) {
-        return dbi.getMovieListGrossingWeekly();
+    public ArrayList<Movie> getWeeklyTopRentals(int i) {
+        return dbi.getMovieListGrossingWeekly(i);
     }
 
-    public ArrayList<Movie> getMonthlyTopRentals(Integer i) {
-        return dbi.getMovieListGrossingMonthly();
+    public ArrayList<Movie> getMonthlyTopRentals(int i) {
+        return dbi.getMovieListGrossingMonthly(i);
     }
 
     public void requestMovieAsBluRay(Movie m) {

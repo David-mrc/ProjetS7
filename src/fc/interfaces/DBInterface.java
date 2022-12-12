@@ -51,12 +51,12 @@ public class DBInterface {
             return facadeMovie.getMovieListBR();
         }
 
-        public ArrayList<Movie> getMovieListGrossingMonthly(){
-            return facadeMovie.getTopMonthlyRentals(5);
+        public ArrayList<Movie> getMovieListGrossingMonthly(int i){
+            return facadeMovie.getTopMonthlyRentals(i);
         }
 
-        public ArrayList<Movie> getMovieListGrossingWeekly(){
-            return facadeMovie.getTopWeeklyRentals(5);
+        public ArrayList<Movie> getMovieListGrossingWeekly(int i){
+            return facadeMovie.getTopWeeklyRentals(i);
         }
 
         public User logUserIn(int userID){
