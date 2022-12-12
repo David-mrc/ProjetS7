@@ -2,13 +2,18 @@ package fc;
 
 import java.sql.Date;
 
-public class CreditCard {
+public class CreditCard extends Cards {
     private int cardNumber;
     private String holder;
     private int ccv;
     private Date expiryDate;
     private int userID;
 
+    public String getType(){return "Credit";}
+
+    public int getID(){
+        return cardNumber;
+    }
     public int getCardNumber() {
         return cardNumber;
     }

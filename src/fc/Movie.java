@@ -40,12 +40,19 @@ public class Movie {
         // Calcul via request DAO.
     }
 
-    public BluRay getAvailableBluRay(){
-        return new BluRay();
+    public boolean isAvailableAsBluRay(){
+        return dao.getAvailableBluRay(this) != null;
     }
 
-    public QRCode getAvailableQRCode(){
-        return new QRCode();
+    public boolean isAvailableAsQRCode(){
+        return dao.getAvailableQRCode(this) != null;
+    }
+    public Support getAvailableBluRay(){
+        return dao.getAvailableBluRay(this);
+    }
+
+    public Support getAvailableQRCode(){
+        return dao.getAvailableQRCode(this);
     }
 
    //SETTERS

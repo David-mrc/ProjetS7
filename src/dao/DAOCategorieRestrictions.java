@@ -14,7 +14,7 @@ public class DAOCategorieRestrictions extends DAO<CategorieRestrictions> {
     @Override
     public boolean create(CategorieRestrictions obj) {
         try( PreparedStatement preparedStatement = conn.prepareStatement(
-                "INSERT INTO CATEGORIERESTRICTIONS VALUES ( cardId = ? , category = ? )"))
+                "INSERT INTO CATEGORIESRESTRICTIONS VALUES ( cardId = ? , CATEGORYNAME = ? )"))
         {
             preparedStatement.setInt(1, obj.getCardId());
             preparedStatement.setString(2, obj.getCategory());
@@ -30,7 +30,7 @@ public class DAOCategorieRestrictions extends DAO<CategorieRestrictions> {
     public CategorieRestrictions read(Object cardId) {
         CategorieRestrictions categorieRestrictions = null;
 
-        try (PreparedStatement CategorieRestrictions = conn.prepareStatement("SELECT category FROM CATEGORIERESTRICTIONS WHERE cardId = ?")){
+        try (PreparedStatement CategorieRestrictions = conn.prepareStatement("SELECT categoryname FROM CATEGORIESRESTRICTIONS WHERE cardId = ?")){
             CategorieRestrictions.setInt(1, (Integer)cardId);
             ResultSet resultSet = CategorieRestrictions.executeQuery();
 

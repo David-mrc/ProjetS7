@@ -18,12 +18,11 @@ public class DAOSupport extends DAO<Support> {
     @Override
     public boolean create(Support obj) {
         try( PreparedStatement preparedStatement = conn.prepareStatement(
-                "INSERT INTO SUPPORTS_BASE VALUES ( supportId = ? , supportType = ? , available = ? , readableDisk = ? , lostDisk = ?, streamAddress = ?, movieId = ?) ")) {
+                "INSERT INTO SUPPORTS_BASE VALUES ( supportId = ? , supportType = ? ,DAMAGEDDISK = ? ,lostDisk = ?, streamAddress = ?, movieId = ?) ")) {
             preparedStatement.setInt(1, obj.getSupportID());
             preparedStatement.setString(2, obj.getSupportType());
-            preparedStatement.setInt(3, obj.isAvailable() ? 1 :0);
-            preparedStatement.setInt(4, obj.isReadableDisk() ? 1 :0);
-            preparedStatement.setInt(5, obj.isLostDisk()? 1 :0);
+            preparedStatement.setInt(3,obj.isDamagedDisk()? 1 : 0);
+            preparedStatement.setInt(5, obj.isLostDisk()? 1 : 0);
             preparedStatement.setString(6, obj.getStreamAddress());
             preparedStatement.setInt(7, obj.getMovieId());
 
@@ -35,10 +34,10 @@ public class DAOSupport extends DAO<Support> {
     }
 
     @Override
-    public Support read(Object supportID) {
+    public Support read(Object supportID) throws SQLException {
         Support support = null;
 
-        try (PreparedStatement Support = conn.prepareStatement("SELECT SUPPORTTYPE, DAMAGEDDISK, LOSTDISK, STREAMADDRESS, MOVIEID, AVAILABLE, TOTALRENTALS, WEEKRENTALS, MONTHRENTALS FROM SUPPORTS WHERE SUPPORTID = ?")){
+        try (PreparedStatement Support = conn.prepareStatement("SELECT SUPPORTTYPE, DAMAGEDDISK, LOSTDISK, STREAMADDRESS, MOVIEID, AVAILABLE FROM SUPPORTS WHERE SUPPORTID = ?")){
             Support.setInt(1, (Integer)supportID);
             ResultSet resultSet = Support.executeQuery();
 
@@ -46,10 +45,10 @@ public class DAOSupport extends DAO<Support> {
             support.setSupportID(((Integer) supportID));
             if (resultSet.next()) {
                 support.setSupportType(resultSet.getString(1));
-                support.setAvailable(resultSet.getInt(2)==1);
-                support.setReadableDisk(resultSet.getInt(3)==1);
-                support.setLostDisk(resultSet.getInt(4)==1);
-                support.setStreamAddress(resultSet.getString(5));
+                support.setDamagedDisk(resultSet.getInt(2)==1);
+                support.setLostDisk(resultSet.getInt(3)==1);
+                support.setStreamAddress(resultSet.getString(4));
+                support.setMovieId(resultSet.getInt(5));
                 support.setMovieId(resultSet.getInt(6));
             }
 
@@ -62,10 +61,10 @@ public class DAOSupport extends DAO<Support> {
 
     @Override
     public boolean update(Support obj) {
-        try (PreparedStatement preparedStatement = conn.prepareStatement("UPDATE SUPPORTS SET SUPPORTTYPE = ?, AVAILABLE = ?, READABLEDISK = ?, STREAMADDRESS = ?, MOVIEID = ? WHERE SUPPORTID = ?")) {
+        try (PreparedStatement preparedStatement = conn.prepareStatement("UPDATE SUPPORTS SET SUPPORTTYPE = ?, AVAILABLE = ?, DAMAGEDDISK = ?, STREAMADDRESS = ?, MOVIEID = ? WHERE SUPPORTID = ?")) {
             preparedStatement.setString(1, obj.getSupportType());
             preparedStatement.setInt(2, obj.isAvailable() ? 1 : 0);
-            preparedStatement.setInt(3, obj.isReadableDisk() ? 1 : 0);
+            preparedStatement.setInt(3, obj.isDamagedDisk() ? 1 : 0);
             preparedStatement.setString(1, obj.getStreamAddress());
             preparedStatement.setInt(1, obj.getMovieId());
 
