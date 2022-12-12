@@ -53,9 +53,10 @@ public class DAOTest {
             //Support
             Support supp3 = supportDAO.read(1);
             DAOFacadeSupport suppFacade = new DAOFacadeSupport(conn);
-            suppFacade.isAvailable(supp3.getSupportID());
-            suppFacade.getMonthlyRentals(supp3.getSupportID());
-            suppFacade.getWeeklyRentals(supp3.getSupportID());
+            System.out.println("is Available ? " + suppFacade.isAvailable(supp3.getSupportID()));
+
+            System.out.println("Monthly rentals : " + suppFacade.getMonthlyRentals(supp3.getSupportID()) );
+            System.out.println("Weekly rentals : " +suppFacade.getWeeklyRentals(supp3.getSupportID()));
 
             //CreditCard
             //CreditCard creditCard = creditCardDAO.read(2);
