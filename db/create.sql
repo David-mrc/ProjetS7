@@ -146,6 +146,26 @@ CREATE VIEW Supports AS
         JOIN TotalRentals USING (supportID)
         JOIN WeekRentals USING (supportID)
         JOIN MonthRentals USING (supportID)
+    UNION
+    SELECT supportID, supportType, damagedDisk, lostDisk, streamAddress, movieID,
+           available, totalRentals, 0, monthRentals
+    FROM Supports_base
+        JOIN Available USING (supportID)
+        JOIN TotalRentals USING (supportID)
+        JOIN MonthRentals USING (supportID)
+    WHERE supportID NOT IN (SELECT supportID FROM WeekRentals)
+    UNION
+    SELECT supportID, supportType, damagedDisk, lostDisk, streamAddress, movieID,
+           available, totalRentals, 0, 0
+    FROM Supports_base
+        JOIN Available USING (supportID)
+        JOIN TotalRentals USING (supportID)
+    WHERE supportID NOT IN (SELECT supportID FROM MonthRentals)
+    UNION
+    SELECT supportID, supportType, damagedDisk, lostDisk, streamAddress, movieID,
+           available, 0, 0, 0
+    FROM Supports_base JOIN Available USING (supportID)
+    WHERE supportID NOT IN (SELECT supportID FROM Rentals)
 ;
 
 CREATE VIEW Movies AS
@@ -167,6 +187,10 @@ CREATE VIEW Movies AS
         JOIN TotalRentals USING (movieID)
         JOIN WeekRentals USING (movieID)
         JOIN MonthRentals USING (movieID)
+    UNION
+    SELECT movieID, title, directorFirstName, directorLastName, 0, 0, 0
+    FROM Movies_base
+    WHERE movieID NOT IN (SELECT movieID FROM Supports);
 ;
 
 CREATE VIEW USERS AS
@@ -190,4 +214,18 @@ CREATE VIEW USERS AS
         JOIN TotalRentals USING (userID)
         JOIN WeekRentals USING (userID)
         JOIN MonthRentals USING (userID)
+    UNION
+    SELECT userID, firstName, lastName, address, subscriber, totalRentals, 0, monthRentals
+    FROM Users_base
+        JOIN TotalRentals USING (userID)
+        JOIN MonthRentals USING (userID)
+    WHERE userID NOT IN (SELECT userID FROM WeekRentals)
+    UNION
+    SELECT userID, firstName, lastName, address, subscriber, totalRentals, 0, 0
+    FROM Users_base JOIN TotalRentals USING (userID)
+    WHERE userID NOT IN (SELECT userID FROM MonthRentals)
+    UNION
+    SELECT userID, firstName, lastName, address, subscriber, 0, 0, 0
+    FROM Users_base
+    WHERE userID NOT IN (SELECT userID FROM Rentals)
 ;
