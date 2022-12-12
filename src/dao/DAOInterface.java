@@ -37,8 +37,8 @@ public class DAOInterface {
         return daoFacadeUser.readUser(id);
     }
 
-    public User login(String firstName, String lastName) {
-        return daoFacadeUser.login(firstName, lastName);
+    public User login(int userID) {
+        return daoFacadeUser.login(userID);
     }
 
     public boolean create(User user){
