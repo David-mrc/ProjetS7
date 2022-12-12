@@ -12,7 +12,7 @@ public class Window extends JFrame {
     private final JPanel mainPane;
     private final CardLayout cardLayout;
     private Screen defaultScreen, loginScreen, signUpScreen;
-    private ScrollScreen movieScreen;
+    private ScrollScreen mainScreen;
     private String currentScreen;
     private final static String DEFAULT_SCREEN = "Default", LOGIN_SCREEN = "Login", SIGNUP_SCREEN = "Sign Up";
     private final static String MAIN_SCREEN = "Main";
@@ -85,15 +85,15 @@ public class Window extends JFrame {
         currentScreen = SIGNUP_SCREEN;
     }
 
-    void openMovieScreen() {
-        if (movieScreen == null) {
-            movieScreen = new MovieScreen(this, fc);
-            mainPane.add(movieScreen, MAIN_SCREEN);
+    void openMainScreen() {
+        if (mainScreen == null) {
+            mainScreen = new MainScreen(this, fc);
+            mainPane.add(mainScreen, MAIN_SCREEN);
         }
         cardLayout.show(mainPane, MAIN_SCREEN);
         topBar.hidePrevious();
         topBar.showMenus();
-        movieScreen.clear();
+        mainScreen.clear();
         currentScreen = MAIN_SCREEN;
     }
 

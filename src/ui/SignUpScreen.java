@@ -77,7 +77,7 @@ public class SignUpScreen extends Screen {
             }
 
             if (fc.createAccount(id, firstName, lastName, address)) {
-                window.openMovieScreen();
+                window.openMainScreen();
             } else {
                 feedBackLabel.setText("Can't create account");
             }
