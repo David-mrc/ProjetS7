@@ -26,6 +26,7 @@ public class FCInterface {
         return dbi.getMovieListQR();
     }
 
+
     public void  searchUnavailableMovie(String s){ // c quoi
 
     }
@@ -46,8 +47,8 @@ public class FCInterface {
     public ArrayList<Movie> getHistory(){
         return dbi.getHistory(this.user);
     }
-    public void getBalance() {
-
+    public float getBalance() {
+        return dbi.getBalance(this.user);
     }
     public boolean login(int id){
         user = dbi.logUserIn(id);

@@ -4,6 +4,7 @@ import fc.*;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class DBInterface {
 
@@ -110,6 +111,14 @@ public class DBInterface {
             }
 
             return c;
+        }
+
+        public float getBalance(User user){
+            Cards c = getUserCard(user);
+            if(Objects.equals(c.getType(), "Subscription")){
+                return ((SubscriptionCard) c).getBalance();
+            }
+            return 0.0F;
         }
 
 }
