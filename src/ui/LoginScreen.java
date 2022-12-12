@@ -45,7 +45,7 @@ public class LoginScreen extends Screen {
             }
 
             if (fc.login(id)) {
-                window.openMainScreen();
+                window.openMovieScreen();
             } else {
                 feedBackLabel.setText("Can't log in");
             }

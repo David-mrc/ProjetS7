@@ -11,7 +11,8 @@ public class Window extends JFrame {
     private final TopBar topBar;
     private final JPanel mainPane;
     private final CardLayout cardLayout;
-    private Screen defaultScreen, loginScreen, signUpScreen, mainScreen;
+    private Screen defaultScreen, loginScreen, signUpScreen;
+    private ScrollScreen movieScreen;
     private String currentScreen;
     private final static String DEFAULT_SCREEN = "Default", LOGIN_SCREEN = "Login", SIGNUP_SCREEN = "Sign Up";
     private final static String MAIN_SCREEN = "Main";
@@ -31,7 +32,7 @@ public class Window extends JFrame {
 
         this.fc = fc;
 
-        topBar = new TopBar(this);
+        topBar = new TopBar(this, fc);
         add(topBar, BorderLayout.NORTH);
 
         AdBanner banner1 = new AdBanner(new File("resources/empty_ad.png"));
@@ -84,15 +85,15 @@ public class Window extends JFrame {
         currentScreen = SIGNUP_SCREEN;
     }
 
-    void openMainScreen() {
-        if (mainScreen == null) {
-            mainScreen = new MainScreen(this, fc);
-            mainPane.add(mainScreen, MAIN_SCREEN);
+    void openMovieScreen() {
+        if (movieScreen == null) {
+            movieScreen = new MovieScreen(this, fc);
+            mainPane.add(movieScreen, MAIN_SCREEN);
         }
         cardLayout.show(mainPane, MAIN_SCREEN);
         topBar.hidePrevious();
         topBar.showMenus();
-        mainScreen.clear();
+        movieScreen.clear();
         currentScreen = MAIN_SCREEN;
     }
 
