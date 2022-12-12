@@ -26,14 +26,14 @@ public class DAOFacadeUser {
         return u;
     }
 
-    public User login(String firstName, String lastName){
+    public User login(int userid){
         User user = null;
 
         try (PreparedStatement User = conn.prepareStatement(
-                "SELECT USERID, FIRSTNAME, LASTNAME, ADDRESS, SUBSCRIBER FROM USERS WHERE FIRSTNAME = ? AND LASTNAME = ?"))
+                "SELECT USERID, FIRSTNAME, LASTNAME, ADDRESS, SUBSCRIBER FROM USERS WHERE USERID = ?"))
         {
-            User.setString(1, firstName);
-            User.setString(2, lastName);
+            User.setInt(1, userid);
+
             ResultSet UserResult = User.executeQuery();
 
             user = new User();
