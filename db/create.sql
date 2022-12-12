@@ -49,7 +49,7 @@ CREATE TABLE Supports_base(
         (supportType = 'QRCode' AND damagedDisk IS NULL AND lostDisk IS NULL AND streamAddress IS NOT NULL)),
     CONSTRAINT damagedDisk_CK CHECK (damagedDisk = 0 OR damagedDisk = 1),
     CONSTRAINT lostDisk_CK CHECK (lostDisk = 0 OR lostDisk = 1),
-    CONSTRAINT Supports_movieID_FK FOREIGN KEY (movieID) REFERENCES Movies(movieID)
+    CONSTRAINT Supports_movieID_FK FOREIGN KEY (movieID) REFERENCES Movies_base(movieID)
 );
 
 CREATE TABLE Users_base(
@@ -120,23 +120,23 @@ CREATE VIEW Supports AS
     ), WeekRentals AS (
         SELECT supportID, COUNT(rentalID) AS weekRentals
         FROM Rentals
-        WHERE to_number(startDate) >= (SELECT to_number(to_char(systimestamp,'yyyymmdd')) - 604800 FROM dual)
+        WHERE to_number(to_char(startDate, 'yyyymmdd')) >= (SELECT to_number(to_char(systimestamp,'yyyymmdd')) - 604800 FROM dual)
         GROUP BY supportID
     ), MonthRentals AS (
         SELECT supportID, COUNT(rentalID) AS monthRentals
         FROM Rentals
-        WHERE to_number(startDate) >= (SELECT to_number(to_char(systimestamp, 'yyyymmdd')) - 2592000 FROM dual)
+        WHERE to_number(to_char(startDate, 'yyyymmdd')) >= (SELECT to_number(to_char(systimestamp, 'yyyymmdd')) - 2592000 FROM dual)
         GROUP BY supportID
     ), Unavailable AS (
         SELECT supportID, 0 AS available
         FROM Rentals
-        WHERE to_number(endDate) > (SELECT to_number(to_char(systimestamp, 'yyyymmdd')) FROM dual)
+        WHERE to_number(to_char(endDate, 'yyyymmdd')) > (SELECT to_number(to_char(systimestamp, 'yyyymmdd')) FROM dual)
     ), Available AS (
         SELECT supportID, available
         FROM Unavailable
         UNION
         SELECT supportID, 1 AS available
-        FROM Supports
+        FROM Supports_base
         WHERE supportID NOT IN (SELECT supportID FROM Unavailable)
     )
     SELECT supportID, supportType, damagedDisk, lostDisk, streamAddress, movieID,
@@ -177,12 +177,12 @@ CREATE VIEW USERS AS
     ), WeekRentals AS (
         SELECT userID, COUNT(rentalID) AS weekRentals
         FROM Rentals
-        WHERE to_number(startDate) >= (SELECT to_number(to_char(systimestamp,'yyyymmdd')) - 604800 FROM dual)
+        WHERE to_number(to_char(startDate, 'yyyymmdd')) >= (SELECT to_number(to_char(systimestamp,'yyyymmdd')) - 604800 FROM dual)
         GROUP BY userID
     ), MonthRentals AS (
         SELECT userID, COUNT(rentalID) AS monthRentals
         FROM Rentals
-        WHERE to_number(startDate) >= (SELECT to_number(to_char(systimestamp, 'yyyymmdd')) - 2592000 FROM dual)
+        WHERE to_number(to_char(startDate, 'yyyymmdd')) >= (SELECT to_number(to_char(systimestamp, 'yyyymmdd')) - 2592000 FROM dual)
         GROUP BY userID
     )
     SELECT userID, firstName, lastName, address, subscriber, totalRentals, weekRentals, monthRentals
