@@ -20,8 +20,8 @@ public class DAORentals extends DAO<Rental> {
     @Override
     public boolean create(Rental obj) throws SQLException {
         try( PreparedStatement preparedStatement = conn.prepareStatement(
-                "INSERT INTO RENTALS VALUES (RENTALID = ? , STARTDATE = ? , ENDDATE = ? , PRICE = ?, " +
-                        "USERID = ?, SUPPORTID = ?, CARDNUMBER = ?, CARDID = ?) ")) {
+                "INSERT INTO RENTALS VALUES (? , ? , ? , ?, " +
+                        "?,  ?, ?, ?) ")) {
             preparedStatement.setInt(1, obj.getId());
             preparedStatement.setDate(2, obj.getStartDate());
             preparedStatement.setDate(3, obj.getEndDate());

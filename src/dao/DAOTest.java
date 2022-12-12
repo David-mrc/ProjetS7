@@ -25,7 +25,7 @@ public class DAOTest {
             DAO<User> userDAO = new DAOUser(conn);
             DAO<CreditCard> creditCardDAO = new DAOCreditCard(conn);
 
-            // READ
+            // Movie
             Movie movie1 = movieDAO.read(1);
             System.out.println(movie1.toString());
             Movie movie2 = movieDAO.read(2);
@@ -35,6 +35,17 @@ public class DAOTest {
             System.out.println(supp1.toString());
             Support supp2 = supportDAO.read(3);
             System.out.println(supp2.toString());
+
+            DAOInterface daoFacade = new DAOInterface();
+            System.out.println("is Available as BluRay movie1 ? " + daoFacade.isAvailableAsBluRay(movie1));
+            System.out.println("is Available ? " + daoFacade.isAvailableAsBluRay(movie2));
+            System.out.println("is Available ? " + daoFacade.isAvailableAsQRCode(movie1));
+            System.out.println("is Available ? " + daoFacade.isAvailableAsQRCode(movie2));
+            System.out.println("Monthly Rentals movie 1 ? " + daoFacade.getMonthlyRentals(movie1));
+            System.out.println("Weekly Rentals movie 2 ? " + daoFacade.getWeeklyRentals(movie2));
+            // Maybe null = must be managed by superior layer
+            daoFacade.getAvailableQRCode(movie1);
+            daoFacade.getAvailableBluRay(movie2);
 
             // SubscriptionCards
             SubscriptionCard subCard = new SubscriptionCard();
@@ -62,14 +73,6 @@ public class DAOTest {
             //CreditCard creditCard = creditCardDAO.read(2);
             DAOFacadeCreditCard creditCardFacade = new DAOFacadeCreditCard(conn);
             creditCardFacade.canRent();
-
-            // WRITE
-
-            Movie movie3 = new Movie();
-            movie3.setTitle("Winnie L'ourson");
-            movie3.setId(3);
-            movie3.setDirectorFirstname("Disney");
-            movie3.setDirectorFirstname("Disney");
 
 
         } catch (SQLException e) {

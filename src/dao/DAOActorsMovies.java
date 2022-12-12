@@ -16,7 +16,7 @@ public class DAOActorsMovies extends DAO<Actor>{
     @Override
     public boolean create(Actor obj) throws SQLException {
         try( PreparedStatement preparedStatement = conn.prepareStatement(
-                "INSERT INTO ACTORSMOVIES VALUES (MOVIEID = ? , FIRSTNAME = ? , LASTNAME = ? )")) {
+                "INSERT INTO ACTORSMOVIES VALUES (? ,  ? , ? )")) {
             preparedStatement.setInt(1, obj.getId());
             preparedStatement.setString(2, obj.getFirstName());
             preparedStatement.setString(3, obj.getLastName());

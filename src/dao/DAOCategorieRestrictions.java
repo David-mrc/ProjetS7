@@ -14,7 +14,7 @@ public class DAOCategorieRestrictions extends DAO<CategorieRestrictions> {
     @Override
     public boolean create(CategorieRestrictions obj) {
         try( PreparedStatement preparedStatement = conn.prepareStatement(
-                "INSERT INTO CATEGORIESRESTRICTIONS VALUES ( cardId = ? , CATEGORYNAME = ? )"))
+                "INSERT INTO CATEGORIESRESTRICTIONS VALUES ( ? , ? )"))
         {
             preparedStatement.setInt(1, obj.getCardId());
             preparedStatement.setString(2, obj.getCategory());

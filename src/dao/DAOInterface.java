@@ -84,9 +84,16 @@ public class DAOInterface {
     public Support getAvailableQRCode(Movie m){
         return daoFacadeMovie.getAvailableQRCode(m);
     }
+    public Support getAvailableBluRay(Movie m){
+        return daoFacadeMovie.getAvailableBluRay(m);
+    }
+
 
     public boolean isAvailableAsBluRay(Movie m){
         return daoFacadeMovie.isAvailableAsBluRay(m);
+    }
+    public boolean isAvailableAsQRCode(Movie movie) {
+        return daoFacadeMovie.isAvailableAsQRCode(movie);
     }
 
     public ArrayList<Movie> getMovieList(){
@@ -141,4 +148,6 @@ public class DAOInterface {
     public boolean canRent(SubscriptionCard subscriptionCard){
         return daoFacadeSubscriptionCards.canRent(subscriptionCard.getCardId());
     }
+
+
 }

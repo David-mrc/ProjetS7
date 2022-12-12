@@ -17,7 +17,7 @@ public class DAOCreditCard extends DAO<CreditCard>{
     @Override
     public boolean create(CreditCard obj) throws SQLException {
         try( PreparedStatement preparedStatement = conn.prepareStatement(
-                "INSERT INTO CREDITCARDS VALUES (CARDNUMBER = ?, HOLDER = ?, CCV = ?, EXPIRYDATE = ?, USERID =?) ")) {
+                "INSERT INTO CREDITCARDS VALUES (?, ?, ?,  ?, ?) ")) {
             preparedStatement.setInt(1, obj.getCardNumber());
             preparedStatement.setString(2, obj.getHolder());
             preparedStatement.setInt(3, obj.getCcv());

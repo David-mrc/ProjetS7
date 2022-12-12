@@ -18,7 +18,7 @@ public class DAOSupport extends DAO<Support> {
     @Override
     public boolean create(Support obj) {
         try( PreparedStatement preparedStatement = conn.prepareStatement(
-                "INSERT INTO SUPPORTS_BASE VALUES ( supportId = ? , supportType = ? ,DAMAGEDDISK = ? ,lostDisk = ?, streamAddress = ?, movieId = ?) ")) {
+                "INSERT INTO SUPPORTS_BASE VALUES (  ? , ? , ? , ?, ?, ?) ")) {
             preparedStatement.setInt(1, obj.getSupportID());
             preparedStatement.setString(2, obj.getSupportType());
             preparedStatement.setInt(3,obj.isDamagedDisk()? 1 : 0);

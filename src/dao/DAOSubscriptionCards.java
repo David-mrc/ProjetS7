@@ -16,7 +16,7 @@ public class DAOSubscriptionCards extends DAO<SubscriptionCard> {
     @Override
     public boolean create(SubscriptionCard obj) throws SQLException {
         try (PreparedStatement preparedStatement = conn.prepareStatement(
-                "INSERT INTO SUBSCRIPTIONCARDS VALUES ( CARDID = ? , BALANCE = ? , USERID = ? )")) {
+                "INSERT INTO SUBSCRIPTIONCARDS VALUES ( ? , ? , ? )")) {
             preparedStatement.setInt(1, obj.getCardId());
             preparedStatement.setFloat(2, obj.getBalance());
             preparedStatement.setInt(3, obj.getUserId());

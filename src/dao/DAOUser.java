@@ -18,7 +18,7 @@ public class DAOUser extends DAO<User>{
     @Override
     public boolean create(User obj) throws SQLException {
         try( PreparedStatement preparedStatement = conn.prepareStatement(
-                "INSERT INTO USERS VALUES (USERID = ? , FIRSTNAME = ? , LASTNAME = ? , ADDRESS = ?, SUBSCRIBER) ")) {
+                "INSERT INTO USERS_BASE VALUES (? , ? , ? , ?, ?) ")) {
             preparedStatement.setInt(1, obj.getUserID());
             preparedStatement.setString(2, obj.getFirstname());
             preparedStatement.setString(3, obj.getLastName());
