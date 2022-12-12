@@ -65,8 +65,8 @@ insert into MOVIESCATEGORIES values (2, 'Fantastique');
 insert into MOVIESCATEGORIES values (2, 'Magie');
 insert into MOVIESCATEGORIES values (3,'Action');
 insert into MOVIESCATEGORIES values (4,'Drame');
-insert into CATEGORIES values (5,'Comedie');
-insert into CATEGORIES values (6,'Horreur');
+insert into MOVIESCATEGORIES values (5,'Comedie');
+insert into MOVIESCATEGORIES values (6,'Horreur');
 
 insert into SUPPORTS_BASE values (1, 'BluRay', 1, 0, NULL, 1);
 insert into SUPPORTS_BASE values (2, 'QRCode', NULL, NULL, 'https://www.cybervideo.com/le-seigneur-des-anneaux', 1);
