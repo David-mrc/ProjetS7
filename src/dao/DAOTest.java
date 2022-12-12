@@ -23,6 +23,7 @@ public class DAOTest {
             DAO<People> peopledaoDAO = new DAOPeople(conn);
             DAO<SubscriptionCard> cardsDAO = new DAOCards(conn);
             DAO<User> userDAO = new DAOUser(conn);
+            DAO<CreditCard> creditCardDAO = new DAOCreditCard(conn);
 
             // READ
             Movie movie1 = movieDAO.read(1);
@@ -50,11 +51,16 @@ public class DAOTest {
             cardsFacade.canRent(subCard1.getCardId());
 
             //Support
-
+            Support supp3 = supportDAO.read(1);
+            DAOFacadeSupport suppFacade = new DAOFacadeSupport(conn);
+            suppFacade.isAvailable(supp3.getSupportID());
+            suppFacade.getMonthlyRentals(supp3.getSupportID());
+            suppFacade.getWeeklyRentals(supp3.getSupportID());
 
             //CreditCard
-
-
+            //CreditCard creditCard = creditCardDAO.read(2);
+            DAOFacadeCreditCard creditCardFacade = new DAOFacadeCreditCard(conn);
+            creditCardFacade.canRent();
 
             // WRITE
 
