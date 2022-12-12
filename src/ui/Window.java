@@ -15,8 +15,9 @@ public class Window extends JFrame {
     private Screen defaultScreen, loginScreen, signUpScreen;
     private ScrollScreen mainScreen;
     private MovieScreen movieScreen;
+    private AccountScreen accountScreen;
     private String currentScreen;
-    private final static String DEFAULT_SCREEN = "Default", LOGIN_SCREEN = "Login", SIGNUP_SCREEN = "Sign Up";
+    private final static String DEFAULT_SCREEN = "Default", LOGIN_SCREEN = "Login", SIGNUP_SCREEN = "Sign Up", ACCOUNT_SCREEN = "Account";
     private final static String MAIN_SCREEN = "Main", MOVIE_SCREEN = "Movie";
 
     Window(FCInterface fc) {
@@ -60,6 +61,17 @@ public class Window extends JFrame {
         topBar.hidePrevious();
         topBar.hideMenus();
         currentScreen = DEFAULT_SCREEN;
+    }
+
+    void openAccountScreen() {
+        if (accountScreen == null) {
+            accountScreen = new AccountScreen(this, fc);
+            mainPane.add(accountScreen, ACCOUNT_SCREEN);
+        }
+        cardLayout.show(mainPane, ACCOUNT_SCREEN);
+        topBar.hidePrevious();
+        topBar.hideMenus();
+        currentScreen = ACCOUNT_SCREEN;
     }
 
     void openLoginScreen() {

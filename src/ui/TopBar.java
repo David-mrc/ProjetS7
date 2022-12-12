@@ -40,6 +40,13 @@ class TopBar extends JPanel {
         menus.add(new JButton("Movies"));
 //        menus.add(new JButton("Categories"));
 
+
+        JButton UserButton = new JButton("Profile");
+        UserButton.addActionListener(e -> {
+            window.openAccountScreen();
+        });
+        menus.add(UserButton);
+
         JButton signOutButton = new JButton("Sign out");
         signOutButton.addActionListener(e -> {
             window.openDefaultScreen();
