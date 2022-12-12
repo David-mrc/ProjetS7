@@ -121,5 +121,15 @@ public class DBInterface {
             return 0.0F;
         }
 
+        public void topUpCard(User user, float amount){
+            Cards c = getUserCard(user);
+            if(Objects.equals(c.getType(), "Subscription")){
+                float oldBalance = ((SubscriptionCard) c).getBalance();
+                ((SubscriptionCard) c).setBalance(oldBalance + amount);
+                //db call
+                facadeSC.credit(amount, ((SubscriptionCard) c).getID());
+            }
+        }
+
 }
 

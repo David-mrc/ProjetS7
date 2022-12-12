@@ -41,8 +41,8 @@ public class FCInterface {
         this.user.requestMovieAsBluRay(m);
     }
 
-    public void  topUpCard(){
-
+    public void  topUpCard(float amount){
+        dbi.topUpCard(this.user, amount);
     }
     public ArrayList<Movie> getHistory(){
         return dbi.getHistory(this.user);
