@@ -249,7 +249,7 @@ public class DAOFacadeMovie {
         ArrayList<Movie> movies = new ArrayList<>();
 
         try {
-            PreparedStatement MovieStatement = conn.prepareStatement("SELECT * FROM Movies_base WHERE movieID IN " +
+            PreparedStatement MovieStatement = conn.prepareStatement("SELECT * FROM Movies_base NATURAL JOIN RENTALS WHERE movieID=userID =? " +
                     "(SELECT * FROM RENTALS WHERE userID = ?) ");
             MovieStatement.setInt(1, userID);
             ResultSet MovieResult = MovieStatement.executeQuery();
