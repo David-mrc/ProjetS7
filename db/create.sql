@@ -31,7 +31,7 @@ CREATE TABLE MoviesCategories(
     movieID INTEGER,
     categoryName VARCHAR2(50),
     CONSTRAINT MoviesCategories_PK PRIMARY KEY (movieID, categoryName),
-    CONSTRAINT MoviesCategories_movieID_FK FOREIGN KEY (movieID) REFERENCES Movies(movieID),
+    CONSTRAINT MoviesCategories_movieID_FK FOREIGN KEY (movieID) REFERENCES Movies_base(movieID),
     CONSTRAINT MoviesCategories_categoryName_FK FOREIGN KEY (categoryName) REFERENCES Categories(categoryName)
 );
 
