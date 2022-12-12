@@ -17,9 +17,7 @@ public class LoginScreen extends Screen {
 
         JPanel northPane = new JPanel(new FlowLayout(FlowLayout.CENTER));
         northPane.setBackground(BACKGROUND);
-        JLabel title = new JLabel("Sign In");
-        title.setFont(new Font("Arial", Font.PLAIN, 30));
-        title.setForeground(Color.ORANGE);
+        JLabel title = createTitle("Sign In");
         northPane.add(title);
         pane.add(northPane, BorderLayout.NORTH);
 
