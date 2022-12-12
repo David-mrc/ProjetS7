@@ -53,15 +53,16 @@ public class FCInterface {
     public void getBalance() {
 
     }
-    public void login(int id){
-        this.user = dbi.logUserIn(id);
+    public boolean login(int id){
+        user = dbi.logUserIn(id);
+        return user != null;
     }
     public void  logout(){
         this.user = null;
     }
-    public boolean createAccount(String firstName, String lastName, String address){
-        User newUser = new User(this.dbi);
-        newUser.setUserID(10);  // a changer //// important
+    public boolean createAccount(int id, String firstName, String lastName, String address){
+        User newUser = new User(dbi);
+        newUser.setUserID(id);
         newUser.setFirstname(firstName);
         newUser.setLastName(lastName);
         newUser.setAddress(address);
