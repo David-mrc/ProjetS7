@@ -37,19 +37,17 @@ public class DAOSupport extends DAO<Support> {
     public Support read(Object supportID) throws SQLException {
         Support support = null;
 
-        try (PreparedStatement Support = conn.prepareStatement("SELECT SUPPORTTYPE, DAMAGEDDISK, LOSTDISK, STREAMADDRESS, MOVIEID, AVAILABLE FROM SUPPORTS WHERE SUPPORTID = ?")){
+        try (PreparedStatement Support = conn.prepareStatement("SELECT SUPPORTTYPE, DAMAGEDDISK, LOSTDISK, STREAMADDRESS, MOVIEID FROM SUPPORTS_BASE WHERE SUPPORTID = ?")){
             Support.setInt(1, (Integer)supportID);
             ResultSet resultSet = Support.executeQuery();
-
-            support = resultSet.getString(1) == "BluRay" ? new BluRay() : new QRCode(); // 1 == BLuray
-            support.setSupportID(((Integer) supportID));
             if (resultSet.next()) {
+                support = resultSet.getString(1) == "BluRay" ? new BluRay() : new QRCode(); // 1 == BLuray
+                support.setSupportID(((Integer) supportID));
                 support.setSupportType(resultSet.getString(1));
                 support.setDamagedDisk(resultSet.getInt(2)==1);
                 support.setLostDisk(resultSet.getInt(3)==1);
                 support.setStreamAddress(resultSet.getString(4));
                 support.setMovieId(resultSet.getInt(5));
-                support.setMovieId(resultSet.getInt(6));
             }
 
         } catch (SQLException e) {

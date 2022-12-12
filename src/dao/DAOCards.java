@@ -15,10 +15,10 @@ public class DAOCards extends DAO<SubscriptionCard> {
     @Override
     public boolean create(SubscriptionCard obj) {
         try (PreparedStatement preparedStatement = conn.prepareStatement(
-                "INSERT INTO CARDS VALUES ( cardId = ? , balance = ? , ageRestriction = ? , userId = ?)")) {
+                "INSERT INTO SUBSCRIPTIONCARDS VALUES (?, ?, ?) ") ) {
             preparedStatement.setInt(1, obj.getCardId());
             preparedStatement.setFloat(2, obj.getBalance());
-            preparedStatement.setInt(4, obj.getUserId());
+            preparedStatement.setInt(3, obj.getUserId());
 
             return preparedStatement.executeUpdate() > 0;
         } catch (SQLException throwables) {
@@ -32,7 +32,8 @@ public class DAOCards extends DAO<SubscriptionCard> {
     public SubscriptionCard read(Object cardID) {
         SubscriptionCard cards = null;
 
-        try (PreparedStatement Cards = conn.prepareStatement("SELECT balance, ageRestriction, userId FROM CARDS WHERE cardId = ?")) {
+        try (PreparedStatement Cards = conn.prepareStatement("SELECT balance, userId FROM SUBSCRIPTIONCARDS WHERE cardId = ?")) {
+            //noinspection DuplicatedCode
             Cards.setInt(1, (Integer) cardID);
             ResultSet resultSet = Cards.executeQuery();
 
@@ -40,7 +41,7 @@ public class DAOCards extends DAO<SubscriptionCard> {
             cards.setCardId( (Integer) cardID);
             if (resultSet.next()) {
                 cards.setBalance(resultSet.getFloat(1));
-                cards.setUserId(resultSet.getInt(3));
+                cards.setUserId(resultSet.getInt(2));
             }
 
         } catch (SQLException e) {

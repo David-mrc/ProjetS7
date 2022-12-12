@@ -32,7 +32,7 @@ public class DAOTest {
 
             Support supp1 = supportDAO.read(1);
             System.out.println(supp1.toString());
-            Support supp2 = supportDAO.read(2);
+            Support supp2 = supportDAO.read(3);
             System.out.println(supp2.toString());
 
             // SubscriptionCards

@@ -35,8 +35,8 @@ public class DAOFacadeSubscriptionCards {
             while (resultSet.next()) {
 
                 System.out.print("Rental number : " + resultSet.getInt(1) +
-                        "; Rental start : " + resultSet.getInt(2) +
-                        "; Rental end : " + resultSet.getInt(3) +
+                        "; Rental start : " + resultSet.getDate(2) +
+                        "; Rental end : " + resultSet.getDate(3) +
                         "; Rental price : " + resultSet.getInt(4) +
                         "; User number : " + resultSet.getInt(5) +
                         "; Card number : " + resultSet.getInt(6));
@@ -53,10 +53,11 @@ public class DAOFacadeSubscriptionCards {
             balance.setInt(1, cardId);
             ResultSet resultSet2 = balance.executeQuery();
 
-
-            PreparedStatement price = conn.prepareStatement("UPDATE SUBSCRIPTIONCARDS SET BALANCE = ? WHERE CARDID = ?");
-            price.setInt(2, cardId);
-            price.setFloat(1, resultSet2.getFloat(1) + credit);
+            if(resultSet2.next()) {
+                PreparedStatement price = conn.prepareStatement("UPDATE SUBSCRIPTIONCARDS SET BALANCE = ? WHERE CARDID = ?");
+                price.setInt(2, cardId);
+                price.setFloat(1, resultSet2.getFloat(1) + credit);
+            }
 
 
         } catch (SQLException e) {

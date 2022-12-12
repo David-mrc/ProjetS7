@@ -28,7 +28,7 @@ public class DAOFacadeSupport {
     public Boolean isAvailable(int supportId ){
         boolean available = false;
         try {
-            PreparedStatement WeeklyRentals = conn.prepareStatement("SELECT * FROM SUPPORTS_BASE WHERE SUPPORTID = ?");
+            PreparedStatement WeeklyRentals = conn.prepareStatement("SELECT * FROM SUPPORTS WHERE SUPPORTID = ?");
             WeeklyRentals.setInt(1, supportId);
             ResultSet resultSet = WeeklyRentals.executeQuery();
 
