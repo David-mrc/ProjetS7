@@ -10,7 +10,8 @@ import java.util.ArrayList;
 
 public class AccountScreen extends Screen {
     FCInterface fc;
-
+    ArrayList<Movie> historyArray;
+    User currentUser;
 
     AccountScreen(Window window, FCInterface fc) {
         super(new StackLayout());
@@ -19,7 +20,7 @@ public class AccountScreen extends Screen {
         JLabel userInfo = createTitle("User Information - ");
         add(userInfo, BorderLayout.CENTER);
 
-        User currentUser =  fc.getUser();
+        currentUser =  fc.getUser();
         JLabel name = createText("Name  -  " + currentUser.getFirstname() + " " + currentUser.getLastName());
         add(name, BorderLayout.CENTER);
 
@@ -50,7 +51,7 @@ public class AccountScreen extends Screen {
         JLabel history = createTitle("Past Rentals - ");
         add(history, BorderLayout.CENTER);
 
-        ArrayList<Movie> historyArray = fc.getHistory();
+        historyArray = fc.getHistory();
 
         JPanel historyPane = new JPanel();
         for(Movie m : historyArray){
@@ -65,6 +66,10 @@ public class AccountScreen extends Screen {
             add(cards, BorderLayout.CENTER);
             JLabel balance = createText("Balance - " + fc.getBalance() + "€");
             add(balance, BorderLayout.CENTER);
+            JButton topUp = new JButton("Top Up");
+            topUp.addActionListener(e -> fc.topUpCard(10));
+            topUp.addActionListener(e -> updateState(balance));
+            add(topUp, BorderLayout.CENTER);
         }
     }
 
@@ -73,5 +78,12 @@ public class AccountScreen extends Screen {
         label.setForeground(Color.ORANGE);
         label.setFont(new Font("Arial", Font.PLAIN, 20));
         return label;
+    }
+
+    private void updateState(JLabel balance){
+        currentUser =  fc.getUser();
+        historyArray = fc.getHistory();
+        balance.setText("Balance - " + fc.getBalance() + "€");
+        super.update(this.getGraphics());
     }
 }
