@@ -31,7 +31,7 @@ public class FCInterface {
     }
 
     public void getMonthlyTopRentals(Integer i) {
-        //TODO: implement method
+        return;
     }
 
     public void requestMovieAsBluRay(Movie m) {

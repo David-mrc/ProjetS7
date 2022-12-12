@@ -76,6 +76,9 @@ public class DAOInterface {
     public int getWeeklyRentals(Movie movie){
         return daoFacadeMovie.getWeeklyRentals(movie.getId());
     }
+    public ArrayList<Movie> getTopMonthlyRentals(int i){
+        return daoFacadeMovie.getTopMonthlyRentals(i);
+    }
 
     public int getMonthlyRentals(Movie movie){
         return daoFacadeMovie.getMonthlyRentals(movie.getId());
