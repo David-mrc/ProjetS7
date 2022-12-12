@@ -48,19 +48,6 @@ public class AccountScreen extends Screen {
         }
         add(sub, BorderLayout.CENTER);
 
-        JLabel history = createTitle("Past Rentals - ");
-        add(history, BorderLayout.CENTER);
-
-        historyArray = fc.getHistory();
-
-        JPanel historyPane = new JPanel();
-        for(Movie m : historyArray){
-            JButton movieButton = new JButton(m.getTitle());
-            movieButton.addActionListener(e -> window.openMovieScreen(m));
-            historyPane.add(movieButton);
-        }
-        add(historyPane, BorderLayout.CENTER);
-
         if(currentUser.isSubscriber()) {
             JLabel cards = createTitle("Subscriber Card - ");
             add(cards, BorderLayout.CENTER);
@@ -71,11 +58,24 @@ public class AccountScreen extends Screen {
             topUp.addActionListener(e -> updateState(balance));
             add(topUp, BorderLayout.CENTER);
         }
+
+        JLabel history = createTitle("Past Rentals - ");
+        add(history, BorderLayout.CENTER);
+
+        historyArray = fc.getHistory();
+
+        JPanel historyPane = new JPanel(new StackLayout());
+        for(Movie m : historyArray){
+            JButton movieButton = new JButton(m.getTitle());
+            movieButton.addActionListener(e -> window.openMovieScreen(m));
+            historyPane.add(movieButton);
+        }
+        add(historyPane, BorderLayout.CENTER);
     }
 
     private JLabel createText(String text) {
         JLabel label = new JLabel(text);
-        label.setForeground(Color.ORANGE);
+        label.setForeground(Color.WHITE);
         label.setFont(new Font("Arial", Font.PLAIN, 20));
         return label;
     }
