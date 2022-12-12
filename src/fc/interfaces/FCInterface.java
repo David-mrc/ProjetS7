@@ -115,4 +115,8 @@ public class FCInterface {
         return dbi.getMovieActors(m.getId());
     }
 
+    public User getUser(){
+        return this.user;
+    }
+
 }

@@ -1,5 +1,6 @@
 package ui;
 
+import fc.Movie;
 import fc.interfaces.FCInterface;
 
 import javax.swing.*;
@@ -13,9 +14,10 @@ public class Window extends JFrame {
     private final CardLayout cardLayout;
     private Screen defaultScreen, loginScreen, signUpScreen;
     private ScrollScreen mainScreen;
+    private MovieScreen movieScreen;
     private String currentScreen;
     private final static String DEFAULT_SCREEN = "Default", LOGIN_SCREEN = "Login", SIGNUP_SCREEN = "Sign Up";
-    private final static String MAIN_SCREEN = "Main";
+    private final static String MAIN_SCREEN = "Main", MOVIE_SCREEN = "Movie";
 
     Window(FCInterface fc) {
         try {
@@ -57,7 +59,6 @@ public class Window extends JFrame {
         cardLayout.show(mainPane, DEFAULT_SCREEN);
         topBar.hidePrevious();
         topBar.hideMenus();
-        defaultScreen.clear();
         currentScreen = DEFAULT_SCREEN;
     }
 
@@ -97,12 +98,27 @@ public class Window extends JFrame {
         currentScreen = MAIN_SCREEN;
     }
 
+    void openMovieScreen(Movie movie) {
+        if (movieScreen == null) {
+            movieScreen = new MovieScreen(this, fc);
+            mainPane.add(movieScreen, MOVIE_SCREEN);
+        }
+        cardLayout.show(mainPane, MOVIE_SCREEN);
+        topBar.showPrevious();
+        topBar.showMenus();
+        movieScreen.clear();
+        movieScreen.setMovie(movie);
+        currentScreen = MOVIE_SCREEN;
+    }
+
     void previous() {
         switch (currentScreen) {
             case LOGIN_SCREEN:
             case SIGNUP_SCREEN:
                 openDefaultScreen();
                 break;
+            case MOVIE_SCREEN:
+                openMainScreen();
             default:
                 break;
         }
