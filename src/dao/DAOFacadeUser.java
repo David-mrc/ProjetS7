@@ -65,7 +65,7 @@ public class DAOFacadeUser {
         rental.setId(random.nextInt(1000000000)); // todo : voir dans la base...
         rental.setSupportid(support.getSupportID());
         rental.setUserid(user.getUserID());
-        if (card.getType() == "Subscription"){
+        if (card.getType().equals("Subscription")) {
             rental.setPrice(3);
             rental.setCardID(card.getID());
         } else {
