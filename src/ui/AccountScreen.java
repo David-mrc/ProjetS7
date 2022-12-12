@@ -13,14 +13,15 @@ public class AccountScreen extends Screen {
 
 
     AccountScreen(Window window, FCInterface fc) {
-        super(new BorderLayout());
+        super(new StackLayout());
         this.fc = fc;
 
         JLabel userInfo = createTitle("User Information - ");
-        add(userInfo, BorderLayout.NORTH);
+        add(userInfo, BorderLayout.CENTER);
 
         User currentUser =  fc.getUser();
         JLabel name = createText("Name  -  " + currentUser.getFirstname() + " " + currentUser.getLastName());
+        add(name, BorderLayout.CENTER);
 
         JLabel address;
         if(currentUser.getAddress() != null){
