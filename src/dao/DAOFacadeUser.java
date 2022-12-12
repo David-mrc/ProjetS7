@@ -2,7 +2,7 @@ package dao;
 
 
 import fc.*;
-import fc.interfaces.DBInterface;
+import dao.DBInterface;
 
 import java.sql.*;
 import java.util.Random;
