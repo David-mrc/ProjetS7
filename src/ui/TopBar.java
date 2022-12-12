@@ -1,5 +1,7 @@
 package ui;
 
+import fc.interfaces.FCInterface;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -9,7 +11,7 @@ class TopBar extends JPanel {
     private final JButton previousButton;
     private final Component padding;
 
-    TopBar(Window window) {
+    TopBar(Window window, FCInterface fc) {
         super(new BorderLayout());
         setPreferredSize(new Dimension(0, 40));
         setBackground(BACKGROUND);
@@ -36,7 +38,15 @@ class TopBar extends JPanel {
         menus = new JPanel();
         menus.setBackground(BACKGROUND);
         menus.add(new JButton("Movies"));
-        menus.add(new JButton("Categories"));
+//        menus.add(new JButton("Categories"));
+
+        JButton signOutButton = new JButton("Sign out");
+        signOutButton.addActionListener(e -> {
+            window.openDefaultScreen();
+            fc.logout();
+        });
+        menus.add(signOutButton);
+
         add(menus, BorderLayout.EAST);
     }
 
